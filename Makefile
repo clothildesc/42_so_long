@@ -6,7 +6,7 @@
 #    By: cscache <cscache@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/24 09:47:02 by cscache           #+#    #+#              #
-#    Updated: 2025/06/24 13:43:25 by cscache          ###   ########.fr        #
+#    Updated: 2025/06/24 16:54:53 by cscache          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,10 @@ OBJS_DIR = obj
 
 SRCS_DIR = srcs
 SRCS = $(SRCS_DIR)/map.c \
-		$(SRCS_DIR)/free.c
+		$(SRCS_DIR)/init_grid.c \
+		$(SRCS_DIR)/check_grid1.c \
+		$(SRCS_DIR)/check_grid2.c \
+		$(SRCS_DIR)/free.c \
 
 OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 
