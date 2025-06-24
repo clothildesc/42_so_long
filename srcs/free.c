@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 09:51:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/24 14:58:07 by cscache          ###   ########.fr       */
+/*   Created: 2025/06/24 13:42:56 by cscache           #+#    #+#             */
+/*   Updated: 2025/06/24 14:02:48 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	main(int ac, char *av[])
+void	free_grid(t_game *g)
 {
-	void	*mlx;
-	void	*mlx_window;
-	t_data	img;
+	int	i;
 
-	if (ac != 2)
+	i = 0;
+	if (g->grid)
 	{
-		perror("program need one argument (a file)");
-		return (1);
+		while (g->grid[i])
+		{
+			free(g->grid[i]);
+			i++;
+		}
+		free(g->grid);
 	}
-	mlx = mlx_init();
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	mlx_window = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	mlx_loop(mlx);
-	return (0);
 }
