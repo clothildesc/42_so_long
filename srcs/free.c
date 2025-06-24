@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 13:42:56 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/24 14:02:48 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/24 18:41:06 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,21 @@ void	free_grid(t_game *g)
 			i++;
 		}
 		free(g->grid);
+	}
+}
+
+void	free_grid_cpy(char **grid_cpy)
+{
+	int	i;
+
+	i = 0;
+	if (grid_cpy)
+	{
+		while (grid_cpy[i])
+		{
+			free(grid_cpy[i]);
+			i++;
+		}
+		free(grid_cpy);
 	}
 }

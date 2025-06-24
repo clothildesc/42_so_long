@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/24 16:58:13 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/24 18:50:40 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ typedef struct s_data {
 	int		line_length;
 	int		endian;
 }	t_data;
+
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
 
 typedef struct s_game
 {
@@ -55,9 +61,13 @@ int		is_in_dataset(char c);
 int		check_rules_for_elements(t_game *g);
 void	init_counters(t_game *g, char c, int x, int y);
 int		check_elements(t_game *g);
+void	flood_fill(char **grid_cpy, t_point size, int row, int col);
+char	**create_grid_cpy(char **grid, int size);
+int		check_accessility(t_game *g);
 void	validate_map(t_game *g);
 
 //free
 void	free_grid(t_game *g);
+void	free_grid_cpy(char **grid_cpy);
 
 #endif

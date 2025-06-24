@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 11:07:11 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/24 16:54:03 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/24 18:50:59 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(void)
 {
 	t_game	game;
+	char	**grid_cpy;
 	int		i;
 
 	i = 0;
@@ -30,7 +31,14 @@ int	main(void)
 	printf("height: %d\n", game.height);
 	printf("width: %d\n", game.width);
 	check_walls(&game);
+	grid_cpy = create_grid_cpy(game.grid, game.height);
 	validate_map(&game);
+	i = 0;
+	while (grid_cpy && grid_cpy[i])
+	{
+		printf("%s\n", grid_cpy[i]);
+		i++;
+	}
 	free_grid(&game);
 	return (0);
 }
