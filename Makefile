@@ -6,16 +6,21 @@
 #    By: cscache <cscache@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/24 09:47:02 by cscache           #+#    #+#              #
-#    Updated: 2025/06/24 09:47:27 by cscache          ###   ########.fr        #
+#    Updated: 2025/06/24 10:23:07 by cscache          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 
-LIBFT_DIR = so_long
+LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
-INCLUDES = -I includes -I $(LIBFT_DIR)
+
+MLX_DIR = mlx-linux
+MLX = $(MLX_DIR)/libmlx.a
+
+INCLUDES = -I includes -I $(LIBFT_DIR) -I $(MLX_DIR)
 HEADER = includes/so_long.h
 
 NAME = so_long
@@ -35,14 +40,18 @@ $(OBJS_DIR):
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADER) | $(OBJS_DIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+$(MLX):
+	make -C $(MLX_DIR)
 
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o $(NAME)
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADER) | $(OBJS_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -O3 -c $< -o $@
+
+$(NAME): $(LIBFT) $(OBJS) $(MLX)
+	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft $(MLX_FLAGS) -o $(NAME)
 
 clean:
 	make -C $(LIBFT_DIR) clean
+	make -C $(MLX_DIR) clean
 	rm -rf $(OBJS_DIR)
 
 fclean: clean
