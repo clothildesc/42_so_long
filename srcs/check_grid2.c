@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:57:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/24 18:51:40 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 11:04:22 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	flood_fill(char **grid_cpy, t_point size, int row, int col)
 {
 	if (row < 0 || col < 0 || row >= size.y || col >= size.x)
 		return ;
-	if (grid_cpy[row][col] != '0' && grid_cpy[row][col] != 'C' && grid_cpy[row][col] != 'E')
+	if (grid_cpy[row][col] == '1' || grid_cpy[row][col] == 'X')
 		return ;
 	grid_cpy[row][col] = 'X';
 	flood_fill(grid_cpy, size, row - 1, col);
@@ -72,9 +72,16 @@ char	**create_grid_cpy(char **grid, int size)
 	grid_cpy = malloc(sizeof(char *) * (size + 1));
 	if (!grid_cpy)
 		return (NULL);
-	while (grid[i])
+	while (grid[i] && i < size)
 	{
 		grid_cpy[i] = ft_strdup(grid[i]);
+		if (!grid_cpy[i])
+		{
+			while (--i >= 0)
+				free(grid_cpy[i]);
+			free(grid_cpy);
+			return (NULL);
+		}
 		i++;
 	}
 	grid_cpy[i] = NULL;
@@ -89,6 +96,8 @@ int	check_accessility(t_game *g)
 	int		y;
 
 	grid_cpy = create_grid_cpy(g->grid, g->height);
+	if (!grid_cpy)
+		return (0);
 	size.x = g->width;
 	size.y = g->height;
 	flood_fill(grid_cpy, size, g->player_y, g->player_x);

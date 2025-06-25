@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/24 18:50:40 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 11:51:58 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 # include <mlx.h>
 # include "../libft/libft.h"
 
-typedef struct s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_data;
+typedef struct s_img_game {
+	void	*wall;
+	void	*floor;
+	void	*player;
+	void	*collectible;
+	void	*exit;
+}	t_img_game;
 
 typedef struct s_point
 {
@@ -36,15 +36,22 @@ typedef struct s_point
 
 typedef struct s_game
 {
-	char	**grid;
-	int		width;
-	int		height;
-	int		collectibles;
-	int		player_count;
-	int		exit_count;
-	int		player_x;
-	int		player_y;
+	char		**grid;
+	int			width;
+	int			height;
+	int			collectibles;
+	int			player_count;
+	int			exit_count;
+	int			player_x;
+	int			player_y;
+	void		*mlx;
+	void		*window;
+	t_img_game	img;
 }	t_game;
+
+# ifndef TILE_SIZE
+#  define TILE_SIZE 64
+# endif
 
 //init grid
 void	init_struct_game(t_game *g);
@@ -69,5 +76,8 @@ void	validate_map(t_game *g);
 //free
 void	free_grid(t_game *g);
 void	free_grid_cpy(char **grid_cpy);
+
+//A SUPPRIMER
+void	print_grid(char **grid);
 
 #endif

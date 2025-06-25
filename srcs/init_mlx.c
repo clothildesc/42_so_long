@@ -1,0 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_mlx.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/25 11:37:37 by cscache           #+#    #+#             */
+/*   Updated: 2025/06/25 11:50:42 by cscache          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/so_long.h"
+
+void	init_window(t_game *g)
+{
+	int	window_height;
+	int	window_width;
+
+	window_height = g->height * TILE_SIZE;
+	window_width = g->width * TILE_SIZE;
+	g->mlx = mlx_init;
+	g->window = mlx_new_window(g->mlx, window_width, window_height, "so long");
+}
+
+void	init_images(t_game *g)
+{
+	g->img.player = mlx_xpm_file_to_image(g->mlx, "assets/player.xml", &w, &h);
+}
