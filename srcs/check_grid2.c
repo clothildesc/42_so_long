@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:57:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 11:04:22 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 12:17:29 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	check_accessility(t_game *g)
 	return (1);
 }
 
-void	validate_map(t_game *g)
+int	validate_map(t_game *g)
 {
 	if (!g->grid)
 		ft_putendl_fd("Error: map does not exist\n", 2);
@@ -132,8 +132,10 @@ void	validate_map(t_game *g)
 	else
 	{
 		ft_printf("MAP IS VALID\n");
-		return ;
+		return (1);
 	}
 	free_grid(g);
 	exit(EXIT_FAILURE);
+	return (0);
 }
+

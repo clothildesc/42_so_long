@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 11:51:58 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 12:20:47 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int		check_elements(t_game *g);
 void	flood_fill(char **grid_cpy, t_point size, int row, int col);
 char	**create_grid_cpy(char **grid, int size);
 int		check_accessility(t_game *g);
-void	validate_map(t_game *g);
+int		validate_map(t_game *g);
+int		load_map(t_game *g, char *file);
 
 //free
 void	free_grid(t_game *g);
