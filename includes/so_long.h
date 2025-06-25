@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 12:20:47 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 12:23:08 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ int		load_map(t_game *g, char *file);
 //free
 void	free_grid(t_game *g);
 void	free_grid_cpy(char **grid_cpy);
+
+//mxl
+void	init_window(t_game *g);
+void	init_images(t_game *g);
 
 //A SUPPRIMER
 void	print_grid(char **grid);

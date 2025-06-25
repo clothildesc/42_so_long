@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:57:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 12:17:29 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 12:24:17 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,12 +130,10 @@ int	validate_map(t_game *g)
 	else if (!check_accessility(g))
 		ft_putendl_fd("Error: not all collectibles & exit are accessible\n", 2);
 	else
-	{
-		ft_printf("MAP IS VALID\n");
 		return (1);
-	}
 	free_grid(g);
 	exit(EXIT_FAILURE);
 	return (0);
 }
+
 

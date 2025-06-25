@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:37:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 12:11:13 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 12:23:13 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,7 @@ void	init_images(t_game *g)
 {
 	int		img_width;
 	int		img_height;
-
-	g->img.player = mlx_xpm_file_to_image(g->mlx, "assets/player.xml", &img_width, &img_height);
-}
-
-void	render_map(t_game *g)
-{
 	
+	g->img.player = mlx_xpm_file_to_image(g->mlx, "assets/player.xml", &img_width, &img_height);
 }
 
