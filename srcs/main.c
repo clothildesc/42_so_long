@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:51:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 12:20:29 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 12:40:09 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int	main(int ac, char *av[])
 		perror("Error : program need one file");
 		return (1);
 	}
-	load_map(&game, av[1]);
+	show_game(&game, av[1]);
 	return (0);
 }
