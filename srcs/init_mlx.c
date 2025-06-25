@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:37:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 12:39:24 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 14:13:22 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_images(t_game *g)
 	int		img_width;
 	int		img_height;
 
-	g->img.wall = mlx_xpm_file_to_image(g->mlx, "assets/wall.xml", \
+	g->img.wall = mlx_xpm_file_to_image(g->mlx, "assets/wall-1.xml", \
 										&img_width, &img_height);
 	g->img.floor = mlx_xpm_file_to_image(g->mlx, "assets/floor.xml", \
 										&img_width, &img_height);
@@ -36,7 +36,7 @@ void	init_images(t_game *g)
 										&img_width, &img_height);
 	g->img.collectible = mlx_xpm_file_to_image(g->mlx, "assets/collectible.xml"\
 										, &img_width, &img_height);
-	g->img.exit = mlx_xpm_file_to_image(g->mlx, "assets/exit.xml", \
+	g->img.exit = mlx_xpm_file_to_image(g->mlx, "assets/exit-1.xml", \
 										&img_width, &img_height);
 }
 
@@ -65,7 +65,7 @@ void	render_map(t_game *g)
 										x * TILE_SIZE, y * TILE_SIZE);
 			else if (tile == 'E')
 				mlx_put_image_to_window(g->mlx, g->window, g->img.exit, \
-										 x * TILE_SIZE, y * TILE_SIZE);
+										x * TILE_SIZE, y * TILE_SIZE);
 			x++;
 		}
 		y++;
