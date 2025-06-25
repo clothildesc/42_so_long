@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:57:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 12:24:17 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 14:38:59 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,7 @@ int	validate_map(t_game *g)
 		ft_putendl_fd("Error: not all collectibles & exit are accessible\n", 2);
 	else
 		return (1);
-	free_grid(g);
-	exit(EXIT_FAILURE);
+	free_grid_and_exit(g);
 	return (0);
 }
 

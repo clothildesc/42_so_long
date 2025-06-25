@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:51:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 14:14:12 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 14:40:59 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char *av[])
 
 	if (ac != 2)
 	{
-		perror("Error : program need one file");
+		ft_putendl_fd("Error : program need one file", 2);
 		return (1);
 	}
 	show_game(&game, av[1]);

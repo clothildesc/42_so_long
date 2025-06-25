@@ -6,13 +6,13 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 13:42:56 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/24 18:41:06 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 14:37:21 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	free_grid(t_game *g)
+void	free_grid_and_exit(t_game *g)
 {
 	int	i;
 
@@ -26,6 +26,7 @@ void	free_grid(t_game *g)
 		}
 		free(g->grid);
 	}
+	exit(EXIT_FAILURE);
 }
 
 void	free_grid_cpy(char **grid_cpy)
