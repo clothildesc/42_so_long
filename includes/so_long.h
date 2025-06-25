@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 17:27:14 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 18:01:18 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_game
 	int			player_count;
 	int			exit_count;
 	int			move_count;
+	int			game_won;
 	int			player_x;
 	int			player_y;
 	void		*mlx;
@@ -51,25 +52,19 @@ typedef struct s_game
 	t_img_game	img;
 }	t_game;
 
-# ifndef TILE_SIZE
-#  define TILE_SIZE 64
-# endif
+# define TILE_SIZE 64
 
-# ifndef KEY_UP
-#  define KEY_UP 119
-# endif
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_A 97
+# define KEY_ESC 65307
+# define KEY_Q 113
 
-# ifndef KEY_DOWN
-#  define KEY_DOWN 115
-# endif
-
-# ifndef KEY_RIGHT
-#  define KEY_RIGHT 100
-# endif
-
-# ifndef KEY_LEFT
-#  define KEY_LEFT 97
-# endif
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_RIGHT 65363
+# define KEY_LEFT 65361
 
 //init grid
 void	init_struct_game(t_game *g);

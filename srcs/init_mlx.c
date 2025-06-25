@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:37:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 17:29:35 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/25 18:20:31 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,16 @@ void	render_map(t_game *g)
 			else if (tile == 'E')
 				mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.exit, \
 										x * TILE_SIZE, y * TILE_SIZE);
+			else if (tile == 'W')
+				mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player_win, \
+										x * TILE_SIZE, y * TILE_SIZE);
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player, \
-							g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
+	if (!g->game_won)
+		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player, \
+						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
 }
 
 int	move_player(t_game *g, int x, int y)
@@ -102,28 +106,28 @@ int	move_player(t_game *g, int x, int y)
 	if (g->grid[new_y][new_x] == '0' || g->grid[new_y][new_x] == 'C' || \
 		g->grid[new_y][new_x] == 'E')
 	{
-		if (g->grid[new_y][new_x] == 'E' && g->collectibles == 0)
-		{
-			g->player_x = new_x;
-			g->player_y = new_y;
-			mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player_win, \
-										new_x * TILE_SIZE, new_x * TILE_SIZE);
-			(g->move_count)++;
-			render_map(g);
-			ft_printf("VICTOIRE");
-			return (1);
-		}
 		if (g->grid[new_y][new_x] == 'C')
 		{
-			g->collectibles -= 1;
+			g->collectibles--;
 			g->grid[new_y][new_x] = '0';
+		}
+		if (g->grid[new_y][new_x] == 'E' && g->collectibles == 0)
+		{
+			g->game_won = 1;
+			g->player_x = new_x;
+			g->player_y = new_y;
+			(g->move_count)++;
+			g->grid[new_y][new_x] = 'W';
+			render_map(g);
+			ft_printf("🎉 VICTOIRE! Total moves: %d\n", g->move_count);
+			return (0);
 		}
 		(g->move_count)++;
 		g->player_x = new_x;
 		g->player_y = new_y;
+		render_map(g);
+		ft_printf("Total moves = %d\n", g->move_count);
 	}
-	render_map(g);
-	ft_printf("Total moves = %d\n", g->move_count);
 	return (1);
 }
 
@@ -133,14 +137,22 @@ int	key_handler(int keycode, void *param)
 
 	g = (t_game *)param;
 
-	if (keycode == KEY_UP)
-		move_player(g, 0, -1);
-	else if (keycode == KEY_DOWN)
-		move_player(g, 0, 1);
-	else if (keycode == KEY_RIGHT)
-		move_player(g, 1, 0);
-	else if (keycode == KEY_LEFT)
-		move_player(g, -1, 0);
+	if (keycode == KEY_ESC || keycode == KEY_Q)
+	{
+		mlx_destroy_window(g->mlx, g->mlx_win);
+		free_grid_and_exit(g);
+	}
+	if (!g->game_won)
+	{
+		if (keycode == KEY_W || keycode == KEY_UP)
+			move_player(g, 0, -1);
+		else if (keycode == KEY_S || keycode == KEY_DOWN)
+			move_player(g, 0, 1);
+		else if (keycode == KEY_D || keycode == KEY_RIGHT)
+			move_player(g, 1, 0);
+		else if (keycode == KEY_A || keycode == KEY_LEFT)
+			move_player(g, -1, 0);
+	}
 	return (0);
 }
 
