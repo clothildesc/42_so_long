@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:37:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 14:27:44 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 14:52:12 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ void	diplay_images(t_game *g, int x, int y, char tile)
 
 void	display_player(t_game *g)
 {
-	if (g->direction == UP)
-		mlx_put_image_to_window(g->mlx, g->mlx_win, \
-						g->img.player.walk_up[g->img_index], \
-						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
-	else if (g->direction == DOWN)
+	if (g->direction == DOWN)
 		mlx_put_image_to_window(g->mlx, g->mlx_win, \
 						g->img.player.walk_down[g->img_index], \
+						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
+	else if (g->direction == UP)
+		mlx_put_image_to_window(g->mlx, g->mlx_win, \
+						g->img.player.walk_up[g->img_index], \
 						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
 	else if (g->direction == RIGHT)
 		mlx_put_image_to_window(g->mlx, g->mlx_win, \
@@ -137,7 +137,7 @@ int	move_player(t_game *g, int x, int y)
 			g->collectibles--;
 			g->grid[new_y][new_x] = '0';
 		}
-		if (g->grid[new_y][new_x] == 'E' && g->collectibles == 0)
+		else if (g->grid[new_y][new_x] == 'E' && g->collectibles == 0)
 		{
 			g->game_won = 1;
 			update_game(g, new_x, new_y);

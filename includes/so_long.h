@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 14:15:40 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 14:46:59 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@
 # include "../libft/libft.h"
 
 typedef enum e_directiom {
-	UP,
 	DOWN,
+	UP,
 	RIGHT,
 	LEFT,
 	QUIT
 }	t_direction;
 
 typedef struct s_player_sprites {
-	void	*walk_up[3];
 	void	*walk_down[3];
+	void	*walk_up[3];
 	void	*walk_right[3];
 	void	*walk_left[3];
 }	t_player_sprites;
@@ -121,6 +121,7 @@ void	update_game(t_game *g, int new_x, int new_y);
 void	show_game(t_game *g, char *file);
 void	show_total_count(t_game *g);
 int		move_player(t_game *g, int x, int y);
+void	define_direction(t_game *g, int keycode);
 int		key_handler(int keycode, void *param);
 
 //free

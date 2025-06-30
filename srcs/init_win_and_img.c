@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:55:36 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 13:44:55 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 14:39:46 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,18 @@ void	init_player_up_and_down(t_game *g)
 	int		img_width;
 	int		img_height;
 
-	g->img.player.walk_up[0] = mlx_xpm_file_to_image(g->mlx, \
-		"assets/player_up-1.xpm", &img_width, &img_height);
-	g->img.player.walk_up[1] = mlx_xpm_file_to_image(g->mlx, \
-		"assets/player_up-2.xpm", &img_width, &img_height);
-	g->img.player.walk_up[2] = mlx_xpm_file_to_image(g->mlx, \
-		"assets/player_up-3.xpm", &img_width, &img_height);
 	g->img.player.walk_down[0] = mlx_xpm_file_to_image(g->mlx, \
 		"assets/player_down-1.xpm", &img_width, &img_height);
 	g->img.player.walk_down[1] = mlx_xpm_file_to_image(g->mlx, \
 		"assets/player_down-2.xpm", &img_width, &img_height);
 	g->img.player.walk_down[2] = mlx_xpm_file_to_image(g->mlx, \
 		"assets/player_down-3.xpm", &img_width, &img_height);
+	g->img.player.walk_up[0] = mlx_xpm_file_to_image(g->mlx, \
+		"assets/player_up-1.xpm", &img_width, &img_height);
+	g->img.player.walk_up[1] = mlx_xpm_file_to_image(g->mlx, \
+		"assets/player_up-2.xpm", &img_width, &img_height);
+	g->img.player.walk_up[2] = mlx_xpm_file_to_image(g->mlx, \
+		"assets/player_up-3.xpm", &img_width, &img_height);
 	if (!g->img.player.walk_up[0] || !g->img.player.walk_up[1] \
 		|| !g->img.player.walk_up[2] || !g->img.player.walk_down[0] \
 		|| !g->img.player.walk_down[1] || !g->img.player.walk_down[2])
