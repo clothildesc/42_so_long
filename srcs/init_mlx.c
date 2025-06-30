@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:37:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 12:00:16 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 12:26:13 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	render_map(t_game *g)
 		y++;
 	}
 	if (!g->game_won)
-		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player, \
+		mlx_put_image_to_window(g->mlx, g->mlx_win, \
+								g->img.player->walk_down[0], \
 						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
 	paint_black_move_zone(g);
 }
@@ -72,11 +73,32 @@ void	show_total_count(t_game *g)
 	char	*str;
 
 	str = ft_itoa(g->move_count);
-	mlx_string_put(g->mlx, g->mlx_win, 15, (g->height * TILE_SIZE) + 20, \
-	0xFFFFFF, "Total moves: ");
-	mlx_string_put(g->mlx, g->mlx_win, 100, (g->height * TILE_SIZE) + 20, \
-	0xFFFFFF, str);
+	if (g->game_won)
+	{
+		mlx_string_put(g->mlx, g->mlx_win, 15, (g->height * TILE_SIZE) + 20, \
+		0xFFFFFF, "Total moves: ");
+		mlx_string_put(g->mlx, g->mlx_win, 100, (g->height * TILE_SIZE) + 20, \
+		0xFFFFFF, str);
+	}
+	else
+	{
+		mlx_string_put(g->mlx, g->mlx_win, 15, (g->height * TILE_SIZE) + 20, \
+		0xFFFFFF, "🎉 VICTOIRE! Total move : ");
+		mlx_string_put(g->mlx, g->mlx_win, 150,(g->height * TILE_SIZE) + 20, \
+		0xFFFFFF, str);
+	}
 	free(str);
+}
+
+void	update_game(t_game *g, int new_x, int new_y)
+{
+	(g->move_count)++;
+	g->player_x = new_x;
+	g->player_y = new_y;
+	if (g->game_won == 1)
+		g->grid[new_y][new_x] = 'W';
+	render_map(g);
+	show_total_count(g);
 }
 
 int	move_player(t_game *g, int x, int y)
@@ -99,21 +121,10 @@ int	move_player(t_game *g, int x, int y)
 		if (g->grid[new_y][new_x] == 'E' && g->collectibles == 0)
 		{
 			g->game_won = 1;
-			g->player_x = new_x;
-			g->player_y = new_y;
-			(g->move_count)++;
-			g->grid[new_y][new_x] = 'W';
-			render_map(g);
-			show_total_count(g);
-			ft_printf("🎉 VICTOIRE! Total moves: %d\n", g->move_count);
+			update_game(g, new_x, new_y);
 			return (0);
 		}
-		(g->move_count)++;
-		g->player_x = new_x;
-		g->player_y = new_y;
-		render_map(g);
-		show_total_count(g);
-		ft_printf("Total moves = %d\n", g->move_count);
+		update_game(g, new_x, new_y);
 	}
 	return (1);
 }

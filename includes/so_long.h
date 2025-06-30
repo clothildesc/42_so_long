@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 12:00:44 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 12:17:37 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	init_images(t_game *g);
 void	paint_black_move_zone(t_game *g);
 void	diplay_images(t_game *g, int x, int y, char tile);
 void	render_map(t_game *g);
+void	update_game(t_game *g, int new_x, int new_y);
 void	show_game(t_game *g, char *file);
 void	show_total_count(t_game *g);
 int		move_player(t_game *g, int x, int y);
