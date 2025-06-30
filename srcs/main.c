@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:51:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 14:40:59 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 17:36:00 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,16 @@ int	main(int ac, char *av[])
 
 	if (ac != 2)
 	{
-		ft_putendl_fd("Error : program need one file", 2);
+		error_message("Wrong number of arguments");
 		return (1);
 	}
-	show_game(&game, av[1]);
+	if (!check_extension(av[1]))
+		return (1);
+	if (!load_map(&game, av[1]))
+	{
+		error_message("Could not load map");
+		return (1);
+	}
+	show_game(&game);
 	return (0);
 }

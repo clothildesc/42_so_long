@@ -33,7 +33,7 @@ else
         printf "${GREEN}$C.[MOK]${DEF_COLOR}";
 fi
 
-./so_long "$map_file" > test_check.txt
+./so_long "$map_file" > test_check.txt 2>&1
 
 SO_LONG_EXIT_CODE=$?
 
@@ -48,23 +48,14 @@ if [ $SO_LONG_EXIT_CODE == 139 ];then
 fi
 
 
-if [ $LINE == "Error" ];then
-        printf "${GREEN}[OK] ${DEF_COLOR}";
-        if [ -n "$LINE2" ];then
-                if [ "${#LINE2}" -gt 1 ]; then
-                        printf "${GRAY}\nExpected output: ${DEF_COLOR} $EXPECTED_OUTPUT \n"
-                        printf "${GRAY}Your output: ${DEF_COLOR} $LINE2 \n"
-                else
-                        printf "${RED}[KO] You must display an explicit error message${DEF_COLOR}\n";
-                        printf "${GRAY}Expected output: ${DEF_COLOR} $EXPECTED_OUTPUT \n"
-                fi
-        else
-                printf "${RED}[KO] You must display an explicit error message${DEF_COLOR}\n";
-                printf "${GRAY}Expected output: ${DEF_COLOR} $EXPECTED_OUTPUT \n"
-        fi
+if [ "$LINE" == "Error" ];then
+    printf "${GREEN}[OK] ${DEF_COLOR}";
+    if [ -n "$LINE2" ];then
+        printf "${GRAY}Your error message: ${DEF_COLOR}$LINE2\n"
+    fi
 else
-        printf "${RED}[KO] Expected output: Error${DEF_COLOR}\n";
-
+    printf "${RED}[KO] Expected first line: Error${DEF_COLOR}\n";
+    printf "${GRAY}Your output: ${DEF_COLOR}$LINE\n"
 fi
 
 ((C++))
@@ -138,7 +129,7 @@ fi
 LINE=$(head -n 1 test_check.txt)
 LINE2=$(sed -n '2p' test_check.txt)
 
-if [ $LINE == "Error" ];then
+if [ "$LINE" == "Error" ];then
         printf "${GREEN}[OK] ${DEF_COLOR}";
         if [ -n "$LINE2" ];then
                 if [ "${#LINE2}" -gt 1 ]; then
@@ -173,7 +164,7 @@ fi
 LINE=$(head -n 1 test_check.txt)
 LINE2=$(sed -n '2p' test_check.txt)
 
-if [ $LINE == "Error" ];then
+if [ "$LINE" == "Error" ];then
         printf "${GREEN}[OK] ${DEF_COLOR}";
         if [ -n "$LINE2" ];then
                 if [ "${#LINE2}" -gt 1 ]; then

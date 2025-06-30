@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:37:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 14:52:12 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 16:57:40 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ void	update_game(t_game *g, int new_x, int new_y)
 	(g->move_count)++;
 	g->player_x = new_x;
 	g->player_y = new_y;
-	g->img_index = (g->img_index + 1) % 3;
+	if (g->previous_direction == g->direction)
+		g->img_index = (g->img_index + 1) % 3;
+	else
+		g->img_index = 0;
 	if (g->game_won == 1)
 		g->grid[new_y][new_x] = 'W';
 	render_map(g);
@@ -147,8 +150,10 @@ int	move_player(t_game *g, int x, int y)
 	}
 	return (1);
 }
+
 void	define_direction(t_game *g, int keycode)
 {
+	g->previous_direction = g->direction;
 	if (keycode == KEY_W || keycode == KEY_UP)
 		g->direction = UP;
 	else if (keycode == KEY_S || keycode == KEY_DOWN)
@@ -160,6 +165,15 @@ void	define_direction(t_game *g, int keycode)
 	else if (keycode == KEY_ESC || keycode == KEY_Q)
 		g->direction = QUIT;
 }
+int	close_window(void *param)
+{
+	t_game	*g;
+
+	g = (t_game *)param;
+	mlx_destroy_window(g->mlx, g->mlx_win);
+	free_grid_and_exit(g);
+	return (0);
+}
 
 int	key_handler(int keycode, void *param)
 {
@@ -169,10 +183,7 @@ int	key_handler(int keycode, void *param)
 
 	define_direction(g, keycode);
 	if (g->direction == QUIT)
-	{
-		mlx_destroy_window(g->mlx, g->mlx_win);
-		free_grid_and_exit(g);
-	}
+		close_window(g);
 	if (!g->game_won)
 	{
 		if (g->direction == UP)
@@ -187,15 +198,13 @@ int	key_handler(int keycode, void *param)
 	return (0);
 }
 
-void	show_game(t_game *g, char *file)
+void	show_game(t_game *g)
 {
-	if (load_map(g, file))
-	{
-		init_window(g);
-		init_images(g);
-		render_map(g);
-		show_total_count(g);
-		mlx_key_hook(g->mlx_win, key_handler, g);
-		mlx_loop(g->mlx);
-	}
+	init_window(g);
+	init_images(g);
+	render_map(g);
+	show_total_count(g);
+	mlx_hook(g->mlx_win, 17, 0, close_window, g);
+	mlx_key_hook(g->mlx_win, key_handler, g);
+	mlx_loop(g->mlx);
 }

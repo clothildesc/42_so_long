@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 13:42:56 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 14:37:21 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 17:19:52 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,11 @@ void	free_grid_cpy(char **grid_cpy)
 		}
 		free(grid_cpy);
 	}
+}
+
+void	error_message(char *message)
+{
+	ft_putendl_fd("Error", 2);
+	if (message)
+		ft_putendl_fd(message, 2);
 }

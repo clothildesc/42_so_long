@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:57:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 14:38:59 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 17:17:59 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_counters(t_game *g, char c, int x, int y)
 		(g->player_count)++;
 		g->player_x = x;
 		g->player_y = y;
+		g->grid[y][x] = '0';
 	}
 	else if (c == 'C')
 		(g->collectibles)++;
@@ -39,7 +40,7 @@ int	check_elements(t_game *g)
 		while (g->grid[y][x])
 		{
 			if (!is_in_dataset(g->grid[y][x]))
-				return (ft_putendl_fd("Error: element is not allowed\n", 2), 0);
+				return (error_message("Element is not allowed"), 0);
 			init_counters(g, g->grid[y][x], x, y);
 			x++;
 		}
@@ -120,15 +121,15 @@ int	check_accessility(t_game *g)
 int	validate_map(t_game *g)
 {
 	if (!g->grid)
-		ft_putendl_fd("Error: map does not exist\n", 2);
+		error_message("Map does not exist");
 	else if (!init_width_and_check_rectangularity(g))
-		ft_putendl_fd("Error: map is not rectangular\n", 2);
+		error_message("Map is not rectangular");
 	else if (!check_walls(g))
-		ft_putendl_fd("Error: map is not surronded by walls\n", 2);
+		error_message("Map is not surronded by walls");
 	else if (!check_elements(g))
-		ft_putendl_fd("Error: map must contain valid elements\n", 2);
+		error_message("Map must contain valid elements");
 	else if (!check_accessility(g))
-		ft_putendl_fd("Error: not all collectibles & exit are accessible\n", 2);
+		error_message("Not all collectibles & exit are accessible");
 	else
 		return (1);
 	free_grid_and_exit(g);

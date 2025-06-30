@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 14:46:59 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 16:58:59 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_game
 	void		*mlx_win;
 	t_img_game	img;
 	t_direction	direction;
+	t_direction	previous_direction;
 	int			img_index;
 }	t_game;
 
@@ -87,6 +88,7 @@ typedef struct s_game
 
 //init grid
 void	init_struct_game(t_game *g);
+int		check_extension(const char *file);
 int		open_file(const char *file);
 void	init_height(const char *file, t_game *g);
 void	remove_newline(char *line);
@@ -118,7 +120,7 @@ void	paint_black_move_zone(t_game *g);
 void	diplay_images(t_game *g, int x, int y, char tile);
 void	render_map(t_game *g);
 void	update_game(t_game *g, int new_x, int new_y);
-void	show_game(t_game *g, char *file);
+void	show_game(t_game *g);
 void	show_total_count(t_game *g);
 int		move_player(t_game *g, int x, int y);
 void	define_direction(t_game *g, int keycode);
@@ -127,8 +129,6 @@ int		key_handler(int keycode, void *param);
 //free
 void	free_grid_and_exit(t_game *g);
 void	free_grid_cpy(char **grid_cpy);
-
-//A SUPPRIMER
-void	print_grid(char **grid);
+void	error_message(char *message);
 
 #endif
