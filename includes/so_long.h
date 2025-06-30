@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 18:01:18 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 12:00:44 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,21 @@
 # include <mlx.h>
 # include "../libft/libft.h"
 
+typedef struct s_player_sprites {
+	void	*walk_up[3];
+	void	*walk_down[3];
+	void	*walk_right[3];
+	void	*walk_left[3];
+}	t_player_sprites;
+
 typedef struct s_img_game {
-	void	*wall;
-	void	*floor;
-	void	*player;
-	void	*player_win;
-	void	*collectible;
-	void	*exit;
+	void				*wall;
+	void				*floor;
+	t_player_sprites	*player;
+	void				*player_win;
+	void				*collectible;
+	void				*exit;
+	void				*black;
 }	t_img_game;
 
 typedef struct s_point
@@ -53,6 +61,7 @@ typedef struct s_game
 }	t_game;
 
 # define TILE_SIZE 64
+# define MOVE_COUNT_ZONE 30
 
 # define KEY_W 119
 # define KEY_S 115
@@ -87,17 +96,25 @@ int		check_accessility(t_game *g);
 int		validate_map(t_game *g);
 int		load_map(t_game *g, char *file);
 
+//init window and images
+void	init_window(t_game *g);
+void	init_player_up_and_down(t_game *g);
+void	init_player_right_and_left(t_game *g);
+void	init_other_images(t_game *g);
+void	init_images(t_game *g);
+
+//mxl
+void	paint_black_move_zone(t_game *g);
+void	diplay_images(t_game *g, int x, int y, char tile);
+void	render_map(t_game *g);
+void	show_game(t_game *g, char *file);
+void	show_total_count(t_game *g);
+int		move_player(t_game *g, int x, int y);
+int		key_handler(int keycode, void *param);
+
 //free
 void	free_grid_and_exit(t_game *g);
 void	free_grid_cpy(char **grid_cpy);
-
-//mxl
-void	init_window(t_game *g);
-void	init_images(t_game *g);
-void	render_map(t_game *g);
-void	show_game(t_game *g, char *file);
-int		move_player(t_game *g, int x, int y);
-int		key_handler(int keycode, void *param);
 
 //A SUPPRIMER
 void	print_grid(char **grid);

@@ -6,7 +6,7 @@
 #    By: cscache <cscache@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/24 09:47:02 by cscache           #+#    #+#              #
-#    Updated: 2025/06/25 12:22:01 by cscache          ###   ########.fr        #
+#    Updated: 2025/06/30 12:01:14 by cscache          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS = $(SRCS_DIR)/main.c \
 		$(SRCS_DIR)/init_grid.c \
 		$(SRCS_DIR)/check_grid1.c \
 		$(SRCS_DIR)/check_grid2.c \
+		$(SRCS_DIR)/init_win_and_img.c \
 		$(SRCS_DIR)/init_mlx.c \
 		$(SRCS_DIR)/free.c \
 

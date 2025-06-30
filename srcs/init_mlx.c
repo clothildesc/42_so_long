@@ -6,56 +6,41 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:37:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 18:20:31 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 12:00:16 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	init_window(t_game *g)
+void	paint_black_move_zone(t_game *g)
 {
-	int	window_height;
-	int	window_width;
+	int	i;
 
-	window_height = g->height * TILE_SIZE;
-	window_width = g->width * TILE_SIZE;
-	g->mlx = mlx_init();
-	if (!g->mlx)
+	i = 0;
+	while (i < g->width * TILE_SIZE)
 	{
-		ft_putendl_fd("Error: Failed to initialize MLX", 2);
-		free_grid_and_exit(g);
-	}
-	g->mlx_win = mlx_new_window(g->mlx, window_width, window_height, "so long");
-	if (!g->mlx_win)
-	{
-		ft_putendl_fd("Error: Failed to  open window", 2);
-		free_grid_and_exit(g);
+		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.black, \
+								i, g->height * TILE_SIZE);
+		i += TILE_SIZE;
 	}
 }
 
-void	init_images(t_game *g)
+void	diplay_images(t_game *g, int x, int y, char tile)
 {
-	int		img_width;
-	int		img_height;
-
-	g->img.wall = mlx_xpm_file_to_image(g->mlx, "assets/wall-2.xpm", \
-										&img_width, &img_height);
-	g->img.floor = mlx_xpm_file_to_image(g->mlx, "assets/floor.xpm", \
-										&img_width, &img_height);
-	g->img.player = mlx_xpm_file_to_image(g->mlx, "assets/player.xpm", \
-										&img_width, &img_height);
-	g->img.collectible = mlx_xpm_file_to_image(g->mlx, "assets/collectible.xpm"\
-										, &img_width, &img_height);
-	g->img.exit = mlx_xpm_file_to_image(g->mlx, "assets/exit-1.xpm", \
-										&img_width, &img_height);
-	g->img.player_win = mlx_xpm_file_to_image(g->mlx, "assets/player_win.xpm", \
-										&img_width, &img_height);
-	if (!g->img.wall || !g->img.floor || !g->img.player || !g->img.collectible \
-		|| !g->img.exit || !g->img.player_win)
-	{
-		ft_putendl_fd("Error: Failed to load imahe", 2);
-		free_grid_and_exit(g);
-	}
+	mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.floor, \
+							x * TILE_SIZE, y * TILE_SIZE);
+	if (tile == '1')
+		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.wall, \
+								x * TILE_SIZE, y * TILE_SIZE);
+	else if (tile == 'C')
+		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.collectible, \
+								x * TILE_SIZE, y * TILE_SIZE);
+	else if (tile == 'E')
+		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.exit, \
+								x * TILE_SIZE, y * TILE_SIZE);
+	else if (tile == 'W')
+		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player_win, \
+								x * TILE_SIZE, y * TILE_SIZE);
 }
 
 void	render_map(t_game *g)
@@ -71,20 +56,7 @@ void	render_map(t_game *g)
 		while (g->grid[y][x])
 		{
 			tile = g->grid[y][x];
-			mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.floor, \
-									x * TILE_SIZE, y * TILE_SIZE);
-			if (tile == '1')
-				mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.wall, \
-										x * TILE_SIZE, y * TILE_SIZE);
-			else if (tile == 'C')
-				mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.collectible, \
-										x * TILE_SIZE, y * TILE_SIZE);
-			else if (tile == 'E')
-				mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.exit, \
-										x * TILE_SIZE, y * TILE_SIZE);
-			else if (tile == 'W')
-				mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player_win, \
-										x * TILE_SIZE, y * TILE_SIZE);
+			diplay_images(g, x, y, tile);
 			x++;
 		}
 		y++;
@@ -92,6 +64,19 @@ void	render_map(t_game *g)
 	if (!g->game_won)
 		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player, \
 						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
+	paint_black_move_zone(g);
+}
+
+void	show_total_count(t_game *g)
+{
+	char	*str;
+
+	str = ft_itoa(g->move_count);
+	mlx_string_put(g->mlx, g->mlx_win, 15, (g->height * TILE_SIZE) + 20, \
+	0xFFFFFF, "Total moves: ");
+	mlx_string_put(g->mlx, g->mlx_win, 100, (g->height * TILE_SIZE) + 20, \
+	0xFFFFFF, str);
+	free(str);
 }
 
 int	move_player(t_game *g, int x, int y)
@@ -119,6 +104,7 @@ int	move_player(t_game *g, int x, int y)
 			(g->move_count)++;
 			g->grid[new_y][new_x] = 'W';
 			render_map(g);
+			show_total_count(g);
 			ft_printf("🎉 VICTOIRE! Total moves: %d\n", g->move_count);
 			return (0);
 		}
@@ -126,6 +112,7 @@ int	move_player(t_game *g, int x, int y)
 		g->player_x = new_x;
 		g->player_y = new_y;
 		render_map(g);
+		show_total_count(g);
 		ft_printf("Total moves = %d\n", g->move_count);
 	}
 	return (1);
@@ -163,6 +150,7 @@ void	show_game(t_game *g, char *file)
 		init_window(g);
 		init_images(g);
 		render_map(g);
+		show_total_count(g);
 		mlx_key_hook(g->mlx_win, key_handler, g);
 		mlx_loop(g->mlx);
 	}
