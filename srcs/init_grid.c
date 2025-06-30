@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_grid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clothildescache <clothildescache@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:51:11 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 17:38:04 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 23:28:08 by clothildesc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ void	init_height(const char *file, t_game *g)
 			line = get_next_line(fd);
 		}
 		close(fd);
-		if (line)
-			free(line);
 		g->height = count;
 	}
 }
@@ -108,11 +106,10 @@ void	init_grid(const char *file, t_game *g)
 			remove_newline(line);
 			g->grid[i] = line;
 			i++;
+			free(line);
 			line = get_next_line(fd);
 		}
 		g->grid[i] = NULL;
-		if (line)
-			free(line);
 		close (fd);
 	}
 }
@@ -134,4 +131,3 @@ int	load_map(t_game *g, char *file)
 		return (1);
 	return (0);
 }
-

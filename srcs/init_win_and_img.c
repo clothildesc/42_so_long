@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_win_and_img.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clothildescache <clothildescache@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:55:36 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 17:18:30 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 23:36:20 by clothildesc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	init_window(t_game *g)
 	if (!g->mlx)
 	{
 		error_message("Failed to initialize MLX");
-		free_grid_and_exit(g);
+		clean_exit(g, EXIT_FAILURE);
 	}
 	g->mlx_win = mlx_new_window(g->mlx, window_width, window_height, "so long");
 	if (!g->mlx_win)
 	{
-		error_message("Failed to  open window");
-		free_grid_and_exit(g);
+		error_message("Failed to open window");
+		clean_exit(g, EXIT_FAILURE);
 	}
 }
 
@@ -55,7 +55,7 @@ void	init_player_up_and_down(t_game *g)
 		|| !g->img.player.walk_down[1] || !g->img.player.walk_down[2])
 	{
 		error_message("Failed to load image");
-		free_grid_and_exit(g);
+		clean_exit(g, EXIT_FAILURE);
 	}
 }
 
@@ -81,7 +81,7 @@ void	init_player_right_and_left(t_game *g)
 		|| !g->img.player.walk_left[1] || !g->img.player.walk_left[2])
 	{
 		error_message("Failed to load image");
-		free_grid_and_exit(g);
+		clean_exit(g, EXIT_FAILURE);
 	}
 }
 
@@ -106,7 +106,7 @@ void	init_other_images(t_game *g)
 		|| !g->img.exit || !g->img.player_win || !g->img.black)
 	{
 		error_message("Failed to load image");
-		free_grid_and_exit(g);
+		clean_exit(g, EXIT_FAILURE);
 	}
 }
 

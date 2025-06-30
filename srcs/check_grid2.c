@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_grid2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clothildescache <clothildescache@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:57:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 17:17:59 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 23:35:22 by clothildesc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,6 @@ int	validate_map(t_game *g)
 		error_message("Not all collectibles & exit are accessible");
 	else
 		return (1);
-	free_grid_and_exit(g);
+	clean_exit(g, EXIT_FAILURE);
 	return (0);
 }
-
-

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clothildescache <clothildescache@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:37:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 16:57:40 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 23:37:26 by clothildesc      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
+// draw black move area
 void	paint_black_move_zone(t_game *g)
 {
 	int	i;
@@ -24,7 +24,7 @@ void	paint_black_move_zone(t_game *g)
 		i += TILE_SIZE;
 	}
 }
-
+// render tiles images
 void	diplay_images(t_game *g, int x, int y, char tile)
 {
 	mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.floor, \
@@ -42,7 +42,7 @@ void	diplay_images(t_game *g, int x, int y, char tile)
 		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player_win, \
 								x * TILE_SIZE, y * TILE_SIZE);
 }
-
+// render player sprite
 void	display_player(t_game *g)
 {
 	if (g->direction == DOWN)
@@ -85,7 +85,7 @@ void	render_map(t_game *g)
 		display_player(g);
 	paint_black_move_zone(g);
 }
-
+// display move count
 void	show_total_count(t_game *g)
 {
 	char	*str;
@@ -107,7 +107,7 @@ void	show_total_count(t_game *g)
 	}
 	free(str);
 }
-
+// update game state
 void	update_game(t_game *g, int new_x, int new_y)
 {
 	(g->move_count)++;
@@ -122,7 +122,7 @@ void	update_game(t_game *g, int new_x, int new_y)
 	render_map(g);
 	show_total_count(g);
 }
-
+// handle player movement
 int	move_player(t_game *g, int x, int y)
 {
 	int		new_x;
@@ -150,7 +150,7 @@ int	move_player(t_game *g, int x, int y)
 	}
 	return (1);
 }
-
+// set player direction
 void	define_direction(t_game *g, int keycode)
 {
 	g->previous_direction = g->direction;
@@ -165,16 +165,16 @@ void	define_direction(t_game *g, int keycode)
 	else if (keycode == KEY_ESC || keycode == KEY_Q)
 		g->direction = QUIT;
 }
+// handle_window_close
 int	close_window(void *param)
 {
 	t_game	*g;
 
 	g = (t_game *)param;
-	mlx_destroy_window(g->mlx, g->mlx_win);
-	free_grid_and_exit(g);
+	clean_exit(g, EXIT_SUCCESS);
 	return (0);
 }
-
+// handle_key_input
 int	key_handler(int keycode, void *param)
 {
 	t_game	*g;
@@ -183,7 +183,7 @@ int	key_handler(int keycode, void *param)
 
 	define_direction(g, keycode);
 	if (g->direction == QUIT)
-		close_window(g);
+		clean_exit(g, EXIT_SUCCESS);
 	if (!g->game_won)
 	{
 		if (g->direction == UP)
@@ -197,7 +197,7 @@ int	key_handler(int keycode, void *param)
 	}
 	return (0);
 }
-
+// initialize_and_start_game
 void	show_game(t_game *g)
 {
 	init_window(g);
