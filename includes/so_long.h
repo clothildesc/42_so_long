@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 12:17:37 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 14:15:40 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@
 # include <mlx.h>
 # include "../libft/libft.h"
 
+typedef enum e_directiom {
+	UP,
+	DOWN,
+	RIGHT,
+	LEFT,
+	QUIT
+}	t_direction;
+
 typedef struct s_player_sprites {
 	void	*walk_up[3];
 	void	*walk_down[3];
@@ -30,7 +38,7 @@ typedef struct s_player_sprites {
 typedef struct s_img_game {
 	void				*wall;
 	void				*floor;
-	t_player_sprites	*player;
+	t_player_sprites	player;
 	void				*player_win;
 	void				*collectible;
 	void				*exit;
@@ -58,6 +66,8 @@ typedef struct s_game
 	void		*mlx;
 	void		*mlx_win;
 	t_img_game	img;
+	t_direction	direction;
+	int			img_index;
 }	t_game;
 
 # define TILE_SIZE 64

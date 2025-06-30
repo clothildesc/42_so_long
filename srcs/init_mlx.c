@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:37:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 12:26:13 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 14:27:44 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,26 @@ void	diplay_images(t_game *g, int x, int y, char tile)
 								x * TILE_SIZE, y * TILE_SIZE);
 }
 
+void	display_player(t_game *g)
+{
+	if (g->direction == UP)
+		mlx_put_image_to_window(g->mlx, g->mlx_win, \
+						g->img.player.walk_up[g->img_index], \
+						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
+	else if (g->direction == DOWN)
+		mlx_put_image_to_window(g->mlx, g->mlx_win, \
+						g->img.player.walk_down[g->img_index], \
+						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
+	else if (g->direction == RIGHT)
+		mlx_put_image_to_window(g->mlx, g->mlx_win, \
+						g->img.player.walk_right[g->img_index], \
+						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
+	else if (g->direction == LEFT)
+		mlx_put_image_to_window(g->mlx, g->mlx_win, \
+						g->img.player.walk_left[g->img_index], \
+						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
+}
+
 void	render_map(t_game *g)
 {
 	char	tile;
@@ -62,9 +82,7 @@ void	render_map(t_game *g)
 		y++;
 	}
 	if (!g->game_won)
-		mlx_put_image_to_window(g->mlx, g->mlx_win, \
-								g->img.player->walk_down[0], \
-						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
+		display_player(g);
 	paint_black_move_zone(g);
 }
 
@@ -73,7 +91,7 @@ void	show_total_count(t_game *g)
 	char	*str;
 
 	str = ft_itoa(g->move_count);
-	if (g->game_won)
+	if (!g->game_won)
 	{
 		mlx_string_put(g->mlx, g->mlx_win, 15, (g->height * TILE_SIZE) + 20, \
 		0xFFFFFF, "Total moves: ");
@@ -83,8 +101,8 @@ void	show_total_count(t_game *g)
 	else
 	{
 		mlx_string_put(g->mlx, g->mlx_win, 15, (g->height * TILE_SIZE) + 20, \
-		0xFFFFFF, "🎉 VICTOIRE! Total move : ");
-		mlx_string_put(g->mlx, g->mlx_win, 150,(g->height * TILE_SIZE) + 20, \
+		0xFFFFFF, "CONGRATS! Total move : ");
+		mlx_string_put(g->mlx, g->mlx_win, 160, (g->height * TILE_SIZE) + 20, \
 		0xFFFFFF, str);
 	}
 	free(str);
@@ -95,6 +113,7 @@ void	update_game(t_game *g, int new_x, int new_y)
 	(g->move_count)++;
 	g->player_x = new_x;
 	g->player_y = new_y;
+	g->img_index = (g->img_index + 1) % 3;
 	if (g->game_won == 1)
 		g->grid[new_y][new_x] = 'W';
 	render_map(g);
@@ -128,6 +147,19 @@ int	move_player(t_game *g, int x, int y)
 	}
 	return (1);
 }
+void	define_direction(t_game *g, int keycode)
+{
+	if (keycode == KEY_W || keycode == KEY_UP)
+		g->direction = UP;
+	else if (keycode == KEY_S || keycode == KEY_DOWN)
+		g->direction = DOWN;
+	else if (keycode == KEY_D || keycode == KEY_RIGHT)
+		g->direction = RIGHT;
+	else if (keycode == KEY_A || keycode == KEY_LEFT)
+		g->direction = LEFT;
+	else if (keycode == KEY_ESC || keycode == KEY_Q)
+		g->direction = QUIT;
+}
 
 int	key_handler(int keycode, void *param)
 {
@@ -135,20 +167,21 @@ int	key_handler(int keycode, void *param)
 
 	g = (t_game *)param;
 
-	if (keycode == KEY_ESC || keycode == KEY_Q)
+	define_direction(g, keycode);
+	if (g->direction == QUIT)
 	{
 		mlx_destroy_window(g->mlx, g->mlx_win);
 		free_grid_and_exit(g);
 	}
 	if (!g->game_won)
 	{
-		if (keycode == KEY_W || keycode == KEY_UP)
+		if (g->direction == UP)
 			move_player(g, 0, -1);
-		else if (keycode == KEY_S || keycode == KEY_DOWN)
+		else if (g->direction == DOWN)
 			move_player(g, 0, 1);
-		else if (keycode == KEY_D || keycode == KEY_RIGHT)
+		else if (g->direction == RIGHT)
 			move_player(g, 1, 0);
-		else if (keycode == KEY_A || keycode == KEY_LEFT)
+		else if (g->direction == LEFT)
 			move_player(g, -1, 0);
 	}
 	return (0);

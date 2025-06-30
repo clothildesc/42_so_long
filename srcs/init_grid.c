@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:51:11 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/25 18:09:45 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 13:35:34 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,9 @@
 
 void	init_struct_game(t_game *g)
 {
-	g->grid = NULL;
-	g->width = 0;
-	g->height = 0;
-	g->collectibles = 0;
-	g->player_count = 0;
-	g->exit_count = 0;
-	g->move_count = 0;
-	g->game_won = 0;
-	g->player_x = 0;
-	g->player_y = 0;
-	g->mlx = NULL;
-	g->mlx_win = NULL;
+	if (!g)
+		return ;
+	ft_bzero(g, sizeof(t_game));
 }
 
 int	open_file(const char *file)
