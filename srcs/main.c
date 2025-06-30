@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:51:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 17:36:00 by cscache          ###   ########.fr       */
+/*   Updated: 2025/06/30 17:43:52 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,5 @@ int	main(int ac, char *av[])
 	show_game(&game);
 	return (0);
 }
+
+// voir comment kill la fenetre car je crois que ca cause des leak
