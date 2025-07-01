@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:36:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 11:36:14 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/01 11:58:01 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	display_move_count(t_game *g)
 		0xFFFFFF, "Total moves: ");
 		mlx_string_put(g->mlx, g->mlx_win, 100, (g->height * TILE_SIZE) + 20, \
 		0xFFFFFF, str);
+		ft_printf("Total moves: %d\n", g->move_count);
 	}
 	else
 	{
@@ -104,6 +105,7 @@ void	display_move_count(t_game *g)
 		0xFFFFFF, "CONGRATS! Total move : ");
 		mlx_string_put(g->mlx, g->mlx_win, 160, (g->height * TILE_SIZE) + 20, \
 		0xFFFFFF, str);
+		ft_printf("CONGRATS! You won with: %d\n", g->move_count);
 	}
 	free(str);
 }

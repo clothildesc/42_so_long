@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:39:35 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 11:52:40 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/01 11:59:58 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	handle_player_movement(t_game *g, int x, int y)
 		{
 			g->game_won = 1;
 			update_game(g, new_x, new_y);
+			clean_exit(g, EXIT_SUCCESS);
 			return (0);
 		}
 		update_game(g, new_x, new_y);
