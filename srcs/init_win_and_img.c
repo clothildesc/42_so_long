@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:55:36 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 10:08:24 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/01 16:34:35 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +115,5 @@ void	init_images(t_game *g)
 	init_player_up_and_down(g);
 	init_player_right_and_left(g);
 	init_other_images(g);
+	init_chicken_sprites(g);
 }

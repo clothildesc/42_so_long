@@ -6,7 +6,7 @@
 #    By: cscache <cscache@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/24 09:47:02 by cscache           #+#    #+#              #
-#    Updated: 2025/07/01 11:50:27 by cscache          ###   ########.fr        #
+#    Updated: 2025/07/01 16:43:35 by cscache          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRCS = $(SRCS_DIR)/main.c \
 		$(SRCS_DIR)/manage_game.c \
 		$(SRCS_DIR)/run_game.c \
 		$(SRCS_DIR)/free.c \
+		$(SRCS_DIR)/bonus.c
 
 OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 

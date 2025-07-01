@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 13:42:56 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 11:52:20 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/01 16:55:36 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@ void	destroy_player_sprites(t_game *g)
 
 void	destroy_other_images(t_game *g)
 {
+	int	i;
+
+	i = 0;
+	while (i < 5)
+	{
+		if (g->img.chicken[i])
+			mlx_destroy_image(g->mlx, g->img.chicken[i]);
+		i++;
+	}
 	if (g->img.floor)
 		mlx_destroy_image(g->mlx, g->img.floor);
 	if (g->img.wall)

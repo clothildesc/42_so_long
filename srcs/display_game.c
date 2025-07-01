@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:36:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 11:58:01 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/01 16:33:00 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ void	render_tiles_images(t_game *g, int x, int y, char tile)
 								x * TILE_SIZE, y * TILE_SIZE);
 	else if (tile == 'W')
 		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player_win, \
+								x * TILE_SIZE, y * TILE_SIZE);
+	else if (tile == 'M')
+		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.chicken[0], \
 								x * TILE_SIZE, y * TILE_SIZE);
 }
 

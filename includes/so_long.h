@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 12:44:21 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/01 16:16:03 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <mlx.h>
+# include <time.h>
 # include "../libft/libft.h"
 
 typedef enum e_directiom {
@@ -48,8 +49,8 @@ typedef struct s_img_game {
 
 typedef struct s_point
 {
-	int	x;
-	int	y;
+	int				x;
+	int				y;
 }	t_point;
 
 typedef struct s_game
@@ -70,6 +71,7 @@ typedef struct s_game
 	t_direction	direction;
 	t_direction	previous_direction;
 	int			img_index;
+	int			enemies_count;
 }	t_game;
 
 # define TILE_SIZE 64
@@ -135,5 +137,14 @@ void	clean_exit(t_game *g, int exit_code);
 void	destroy_player_sprites(t_game *g);
 void	destroy_other_images(t_game *g);
 void	display_error_message(char *message);
+
+//bonus
+void	init_chicken_sprites(t_game *g);
+int		calculate_size_array_coordinates(t_game *g);
+void	fill_array_positions(t_game *g, t_point *positions);
+t_point	*create_array_positions(t_game *g, int size);
+void	suffle(t_point *positions, int size);
+void	place_enemies(t_game *g, t_point *positions);
+void	create_enemies(t_game *g);
 
 #endif
