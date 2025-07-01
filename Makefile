@@ -6,7 +6,7 @@
 #    By: cscache <cscache@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/24 09:47:02 by cscache           #+#    #+#              #
-#    Updated: 2025/06/30 16:28:43 by cscache          ###   ########.fr        #
+#    Updated: 2025/07/01 11:50:27 by cscache          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,15 @@ OBJS_DIR = obj
 
 SRCS_DIR = srcs
 SRCS = $(SRCS_DIR)/main.c \
+		$(SRCS_DIR)/check_file.c \
+		$(SRCS_DIR)/check_elements.c \
+		$(SRCS_DIR)/check_constraints_1.c \
+		$(SRCS_DIR)/check_constraints_2.c \
 		$(SRCS_DIR)/init_grid.c \
-		$(SRCS_DIR)/check_grid1.c \
-		$(SRCS_DIR)/check_grid2.c \
 		$(SRCS_DIR)/init_win_and_img.c \
-		$(SRCS_DIR)/init_mlx.c \
+		$(SRCS_DIR)/display_game.c \
+		$(SRCS_DIR)/manage_game.c \
+		$(SRCS_DIR)/run_game.c \
 		$(SRCS_DIR)/free.c \
 
 OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)

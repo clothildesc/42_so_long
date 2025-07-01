@@ -1,52 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_grid2.c                                      :+:      :+:    :+:   */
+/*   check_constraints_1.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 16:57:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 11:12:48 by cscache          ###   ########.fr       */
+/*   Created: 2025/07/01 11:53:34 by cscache           #+#    #+#             */
+/*   Updated: 2025/07/01 11:53:36 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	init_counters(t_game *g, char c, int x, int y)
+int	init_width_and_check_rectangularity(t_game *g)
 {
-	if (c == 'P')
+	int		i;
+	size_t	len;
+
+	if (!g->grid)
+		return (0);
+	len = ft_strlen(g->grid[0]);
+	i = 1;
+	while (g->grid[i])
 	{
-		(g->player_count)++;
-		g->player_x = x;
-		g->player_y = y;
-		g->grid[y][x] = '0';
+		if (len != ft_strlen(g->grid[i]))
+			return (0);
+		len = ft_strlen(g->grid[i]);
+		i++;
 	}
-	else if (c == 'C')
-		(g->collectibles)++;
-	else if (c == 'E')
-		(g->exit_count)++;
+	g->width = (int)len;
+	return (1);
 }
 
-int	check_elements(t_game *g)
+int	check_walls(t_game *g)
 {
-	int	x;
 	int	y;
+	int	x;
 
-	x = 0;
 	y = 0;
 	while (g->grid[y])
 	{
 		x = 0;
 		while (g->grid[y][x])
 		{
-			if (!is_in_dataset(g->grid[y][x]))
-				return (display_error_message("Element is not allowed"), 0);
-			init_counters(g, g->grid[y][x], x, y);
+			if (g->grid[0][x] != '1' || g->grid[g->height - 1][x] != '1' \
+				|| g->grid[y][0] != '1' || g->grid[y][g->width - 1] != '1')
+				return (0);
 			x++;
 		}
 		y++;
 	}
-	return (check_rules_for_elements(g));
+	return (1);
 }
 
 void	flood_fill(char **grid_cpy, t_point size, int row, int col)
@@ -116,32 +120,4 @@ int	check_accessility(t_game *g)
 	}
 	free_grid_cpy(grid_cpy);
 	return (1);
-}
-
-int	grid_size(t_game *g)
-{
-	if ((g->height * TILE_SIZE + MOVE_COUNT_ZONE) > 1080 \
-	|| (g->width * TILE_SIZE) > 1920)
-		return (0);
-	return (1);
-}
-
-int	validate_map(t_game *g)
-{
-	if (!g->grid)
-		display_error_message("Map does not exist");
-	else if (!init_width_and_check_rectangularity(g))
-		display_error_message("Map is not rectangular");
-	else if (!check_walls(g))
-		display_error_message("Map is not surronded by walls");
-	else if (!check_elements(g))
-		display_error_message("Map must contain valid elements");
-	else if (!check_accessility(g))
-		display_error_message("Not all collectibles & exit are accessible");
-	else if (!grid_size(g))
-		display_error_message("Map is to big for standard screen");
-	else
-		return (1);
-	clean_exit(g, EXIT_FAILURE);
-	return (0);
 }

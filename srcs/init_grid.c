@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:51:11 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 10:27:23 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/01 11:33:08 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,40 +17,6 @@ void	init_struct_game(t_game *g)
 	if (!g)
 		return ;
 	ft_bzero(g, sizeof(t_game));
-}
-
-int	check_extension(const char *file)
-{
-	int	len;
-
-	if (!file)
-		return (display_error_message("Invalid file extension"), 0);
-	len = ft_strlen(file);
-	if (len < 5)
-		return (display_error_message("Invalid file extension"), 0);
-	if (ft_strncmp(file + len - 4, ".ber", 4) != 0)
-	{
-		display_error_message("Invalid file extension");
-		return (0);
-	}
-	return (1);
-}
-
-int	open_file(const char *file)
-{
-	int	fd;
-
-	if (!file)
-		return (0);
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-	{
-		ft_putendl_fd("Error", 2);
-		perror(file);
-		exit(EXIT_FAILURE);
-		return (-1);
-	}
-	return (fd);
 }
 
 void	init_height(const char *file, t_game *g)

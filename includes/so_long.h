@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 10:19:03 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/01 11:55:37 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	init_grid(const char *file, t_game *g);
 //check grid
 int		init_width_and_check_rectangularity(t_game *g);
 int		check_walls(t_game *g);
-int		count_elements(const char *s, char c);
 int		is_in_dataset(char c);
 int		check_rules_for_elements(t_game *g);
 void	init_counters(t_game *g, char c, int x, int y);
@@ -125,6 +124,7 @@ void	display_move_count(t_game *g);
 int		handle_player_movement(t_game *g, int x, int y);
 void	set_player_direction(t_game *g, int keycode);
 int		handle_key_input(int keycode, void *param);
+int		close_window(void *param);
 void	initialize_and_start_game(t_game *g);
 
 //free
