@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 11:55:37 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/01 12:44:21 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_img_game {
 	void				*collectible;
 	void				*exit;
 	void				*black;
+	void				*chicken[5];
 }	t_img_game;
 
 typedef struct s_point
