@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_grid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clothildescache <clothildescache@studen    +#+  +:+       +#+        */
+/*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:51:11 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 23:28:08 by clothildesc      ###   ########.fr       */
+/*   Updated: 2025/07/01 10:27:23 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	check_extension(const char *file)
 	int	len;
 
 	if (!file)
-		return (error_message("Invalid file extension"), 0);
+		return (display_error_message("Invalid file extension"), 0);
 	len = ft_strlen(file);
 	if (len < 5)
-		return (error_message("Invalid file extension"), 0);
+		return (display_error_message("Invalid file extension"), 0);
 	if (ft_strncmp(file + len - 4, ".ber", 4) != 0)
 	{
-		error_message("Invalid file extension");
+		display_error_message("Invalid file extension");
 		return (0);
 	}
 	return (1);
@@ -47,6 +47,7 @@ int	open_file(const char *file)
 	{
 		ft_putendl_fd("Error", 2);
 		perror(file);
+		exit(EXIT_FAILURE);
 		return (-1);
 	}
 	return (fd);
@@ -70,6 +71,8 @@ void	init_height(const char *file, t_game *g)
 			free(line);
 			line = get_next_line(fd);
 		}
+		if (line)
+			free(line);
 		close(fd);
 		g->height = count;
 	}
@@ -95,7 +98,7 @@ void	init_grid(const char *file, t_game *g)
 	line = NULL;
 	g->grid = malloc(sizeof(char *) * (g->height + 1));
 	if (!g->grid)
-		return (error_message("Failed to malloc grid"));
+		return (display_error_message("Failed to malloc grid"));
 	fd = open_file(file);
 	if (fd >= 0)
 	{
@@ -106,10 +109,11 @@ void	init_grid(const char *file, t_game *g)
 			remove_newline(line);
 			g->grid[i] = line;
 			i++;
-			free(line);
 			line = get_next_line(fd);
 		}
 		g->grid[i] = NULL;
+		if (line)
+			free(line);
 		close (fd);
 	}
 }
@@ -120,7 +124,7 @@ int	load_map(t_game *g, char *file)
 	init_height(file, g);
 	if (!g->height)
 	{
-		error_message("Empty or invalid file");
+		display_error_message("Empty or invalid file");
 		return (0);
 	}
 	init_grid(file, g);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_win_and_img.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clothildescache <clothildescache@studen    +#+  +:+       +#+        */
+/*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 11:55:36 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 23:36:20 by clothildesc      ###   ########.fr       */
+/*   Updated: 2025/07/01 10:08:24 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	init_window(t_game *g)
 	g->mlx = mlx_init();
 	if (!g->mlx)
 	{
-		error_message("Failed to initialize MLX");
+		display_error_message("Failed to initialize MLX");
 		clean_exit(g, EXIT_FAILURE);
 	}
 	g->mlx_win = mlx_new_window(g->mlx, window_width, window_height, "so long");
 	if (!g->mlx_win)
 	{
-		error_message("Failed to open window");
+		display_error_message("Failed to open window");
 		clean_exit(g, EXIT_FAILURE);
 	}
 }
@@ -54,7 +54,7 @@ void	init_player_up_and_down(t_game *g)
 		|| !g->img.player.walk_up[2] || !g->img.player.walk_down[0] \
 		|| !g->img.player.walk_down[1] || !g->img.player.walk_down[2])
 	{
-		error_message("Failed to load image");
+		display_error_message("Failed to load image");
 		clean_exit(g, EXIT_FAILURE);
 	}
 }
@@ -80,7 +80,7 @@ void	init_player_right_and_left(t_game *g)
 		|| !g->img.player.walk_right[2] || !g->img.player.walk_left[0] \
 		|| !g->img.player.walk_left[1] || !g->img.player.walk_left[2])
 	{
-		error_message("Failed to load image");
+		display_error_message("Failed to load image");
 		clean_exit(g, EXIT_FAILURE);
 	}
 }
@@ -105,7 +105,7 @@ void	init_other_images(t_game *g)
 	if (!g->img.wall || !g->img.floor || !g->img.collectible \
 		|| !g->img.exit || !g->img.player_win || !g->img.black)
 	{
-		error_message("Failed to load image");
+		display_error_message("Failed to load image");
 		clean_exit(g, EXIT_FAILURE);
 	}
 }

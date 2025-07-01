@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 16:58:59 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/01 10:19:03 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,19 +116,23 @@ void	init_other_images(t_game *g);
 void	init_images(t_game *g);
 
 //mxl
-void	paint_black_move_zone(t_game *g);
-void	diplay_images(t_game *g, int x, int y, char tile);
+void	draw_black_move_zone(t_game *g);
+void	render_tiles_images(t_game *g, int x, int y, char tile);
+void	render_player_sprites(t_game *g);
 void	render_map(t_game *g);
 void	update_game(t_game *g, int new_x, int new_y);
-void	show_game(t_game *g);
-void	show_total_count(t_game *g);
-int		move_player(t_game *g, int x, int y);
-void	define_direction(t_game *g, int keycode);
-int		key_handler(int keycode, void *param);
+void	display_move_count(t_game *g);
+int		handle_player_movement(t_game *g, int x, int y);
+void	set_player_direction(t_game *g, int keycode);
+int		handle_key_input(int keycode, void *param);
+void	initialize_and_start_game(t_game *g);
 
 //free
-void	free_grid_and_exit(t_game *g);
 void	free_grid_cpy(char **grid_cpy);
-void	error_message(char *message);
+void	free_grid(t_game *g);
+void	clean_exit(t_game *g, int exit_code);
+void	destroy_player_sprites(t_game *g);
+void	destroy_other_images(t_game *g);
+void	display_error_message(char *message);
 
 #endif

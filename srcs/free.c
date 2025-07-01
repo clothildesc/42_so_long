@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clothildescache <clothildescache@studen    +#+  +:+       +#+        */
+/*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 13:42:56 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 23:33:02 by clothildesc      ###   ########.fr       */
+/*   Updated: 2025/07/01 10:42:33 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void destroy_player_sprites(t_game *g)
+void	destroy_player_sprites(t_game *g)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 3)
@@ -31,7 +31,7 @@ void destroy_player_sprites(t_game *g)
 	}
 }
 
-void destroy_other_images(t_game *g)
+void	destroy_other_images(t_game *g)
 {
 	if (g->img.floor)
 		mlx_destroy_image(g->mlx, g->img.floor);
@@ -47,7 +47,7 @@ void destroy_other_images(t_game *g)
 		mlx_destroy_image(g->mlx, g->img.black);
 }
 
-void	free_grid(t_game *g, int exit_code)
+void	free_grid(t_game *g)
 {
 	int	i;
 
@@ -60,7 +60,7 @@ void	free_grid(t_game *g, int exit_code)
 	}
 }
 
-void clean_exit(t_game *g, int exit_code)
+void	clean_exit(t_game *g, int exit_code)
 {
 	if (g->mlx)
 	{
@@ -68,6 +68,8 @@ void clean_exit(t_game *g, int exit_code)
 		destroy_other_images(g);
 		if (g->mlx_win)
 			mlx_destroy_window(g->mlx, g->mlx_win);
+		mlx_destroy_display(g->mlx);
+		free(g->mlx);
 	}
 	free_grid(g);
 	exit(exit_code);
@@ -88,8 +90,8 @@ void	free_grid_cpy(char **grid_cpy)
 		free(grid_cpy);
 	}
 }
-// display error message
-void	error_message(char *message)
+
+void	display_error_message(char *message)
 {
 	ft_putendl_fd("Error", 2);
 	if (message)

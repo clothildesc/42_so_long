@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:52:49 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 17:32:13 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/01 10:55:29 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,12 @@ int	is_in_dataset(char c)
 int	check_rules_for_elements(t_game *g)
 {
 	if (g->player_count != 1)
-		return (error_message("Map must contain exactly one player"), 0);
+		return \
+		(display_error_message("Map must contain exactly one player"), 0);
 	else if (g->exit_count != 1)
-		return (error_message("Map must contain exactly one exit"), 0);
+		return (display_error_message("Map must contain exactly one exit"), 0);
 	else if (g->collectibles < 1)
-		return (error_message("Map must contain at least one collectible"), 0);
+		return \
+		(display_error_message("Map must contain at least one collectible"), 0);
 	return (1);
 }

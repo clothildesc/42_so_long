@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clothildescache <clothildescache@studen    +#+  +:+       +#+        */
+/*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 11:37:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 23:37:26 by clothildesc      ###   ########.fr       */
+/*   Updated: 2025/07/01 10:03:34 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-// draw black move area
-void	paint_black_move_zone(t_game *g)
+
+void	draw_black_move_zone(t_game *g)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ void	paint_black_move_zone(t_game *g)
 	}
 }
 // render tiles images
-void	diplay_images(t_game *g, int x, int y, char tile)
+void	render_tiles_images(t_game *g, int x, int y, char tile)
 {
 	mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.floor, \
 							x * TILE_SIZE, y * TILE_SIZE);
@@ -42,8 +42,8 @@ void	diplay_images(t_game *g, int x, int y, char tile)
 		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player_win, \
 								x * TILE_SIZE, y * TILE_SIZE);
 }
-// render player sprite
-void	display_player(t_game *g)
+
+void	render_player_sprites(t_game *g)
 {
 	if (g->direction == DOWN)
 		mlx_put_image_to_window(g->mlx, g->mlx_win, \
@@ -76,17 +76,17 @@ void	render_map(t_game *g)
 		while (g->grid[y][x])
 		{
 			tile = g->grid[y][x];
-			diplay_images(g, x, y, tile);
+			render_tiles_images(g, x, y, tile);
 			x++;
 		}
 		y++;
 	}
 	if (!g->game_won)
-		display_player(g);
-	paint_black_move_zone(g);
+		render_player_sprites(g);
+	draw_black_move_zone(g);
 }
-// display move count
-void	show_total_count(t_game *g)
+
+void	display_move_count(t_game *g)
 {
 	char	*str;
 
@@ -107,7 +107,7 @@ void	show_total_count(t_game *g)
 	}
 	free(str);
 }
-// update game state
+
 void	update_game(t_game *g, int new_x, int new_y)
 {
 	(g->move_count)++;
@@ -120,10 +120,10 @@ void	update_game(t_game *g, int new_x, int new_y)
 	if (g->game_won == 1)
 		g->grid[new_y][new_x] = 'W';
 	render_map(g);
-	show_total_count(g);
+	display_move_count(g);
 }
 // handle player movement
-int	move_player(t_game *g, int x, int y)
+int	handle_player_movement(t_game *g, int x, int y)
 {
 	int		new_x;
 	int		new_y;
@@ -150,8 +150,8 @@ int	move_player(t_game *g, int x, int y)
 	}
 	return (1);
 }
-// set player direction
-void	define_direction(t_game *g, int keycode)
+
+void	set_player_direction(t_game *g, int keycode)
 {
 	g->previous_direction = g->direction;
 	if (keycode == KEY_W || keycode == KEY_UP)
@@ -165,7 +165,7 @@ void	define_direction(t_game *g, int keycode)
 	else if (keycode == KEY_ESC || keycode == KEY_Q)
 		g->direction = QUIT;
 }
-// handle_window_close
+
 int	close_window(void *param)
 {
 	t_game	*g;
@@ -174,37 +174,36 @@ int	close_window(void *param)
 	clean_exit(g, EXIT_SUCCESS);
 	return (0);
 }
-// handle_key_input
-int	key_handler(int keycode, void *param)
+
+int	handle_key_input(int keycode, void *param)
 {
 	t_game	*g;
 
 	g = (t_game *)param;
-
-	define_direction(g, keycode);
+	set_player_direction(g, keycode);
 	if (g->direction == QUIT)
 		clean_exit(g, EXIT_SUCCESS);
 	if (!g->game_won)
 	{
 		if (g->direction == UP)
-			move_player(g, 0, -1);
+			handle_player_movement(g, 0, -1);
 		else if (g->direction == DOWN)
-			move_player(g, 0, 1);
+			handle_player_movement(g, 0, 1);
 		else if (g->direction == RIGHT)
-			move_player(g, 1, 0);
+			handle_player_movement(g, 1, 0);
 		else if (g->direction == LEFT)
-			move_player(g, -1, 0);
+			handle_player_movement(g, -1, 0);
 	}
 	return (0);
 }
-// initialize_and_start_game
-void	show_game(t_game *g)
+
+void	initialize_and_start_game(t_game *g)
 {
 	init_window(g);
 	init_images(g);
 	render_map(g);
-	show_total_count(g);
+	display_move_count(g);
 	mlx_hook(g->mlx_win, 17, 0, close_window, g);
-	mlx_key_hook(g->mlx_win, key_handler, g);
+	mlx_key_hook(g->mlx_win, handle_key_input, g);
 	mlx_loop(g->mlx);
 }

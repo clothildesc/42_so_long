@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_grid2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clothildescache <clothildescache@studen    +#+  +:+       +#+        */
+/*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:57:37 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/30 23:35:22 by clothildesc      ###   ########.fr       */
+/*   Updated: 2025/07/01 11:12:48 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	check_elements(t_game *g)
 		while (g->grid[y][x])
 		{
 			if (!is_in_dataset(g->grid[y][x]))
-				return (error_message("Element is not allowed"), 0);
+				return (display_error_message("Element is not allowed"), 0);
 			init_counters(g, g->grid[y][x], x, y);
 			x++;
 		}
@@ -118,18 +118,28 @@ int	check_accessility(t_game *g)
 	return (1);
 }
 
+int	grid_size(t_game *g)
+{
+	if ((g->height * TILE_SIZE + MOVE_COUNT_ZONE) > 1080 \
+	|| (g->width * TILE_SIZE) > 1920)
+		return (0);
+	return (1);
+}
+
 int	validate_map(t_game *g)
 {
 	if (!g->grid)
-		error_message("Map does not exist");
+		display_error_message("Map does not exist");
 	else if (!init_width_and_check_rectangularity(g))
-		error_message("Map is not rectangular");
+		display_error_message("Map is not rectangular");
 	else if (!check_walls(g))
-		error_message("Map is not surronded by walls");
+		display_error_message("Map is not surronded by walls");
 	else if (!check_elements(g))
-		error_message("Map must contain valid elements");
+		display_error_message("Map must contain valid elements");
 	else if (!check_accessility(g))
-		error_message("Not all collectibles & exit are accessible");
+		display_error_message("Not all collectibles & exit are accessible");
+	else if (!grid_size(g))
+		display_error_message("Map is to big for standard screen");
 	else
 		return (1);
 	clean_exit(g, EXIT_FAILURE);
