@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:41:43 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 16:52:37 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/02 12:18:39 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_point	*create_array_positions(t_game *g, int size)
 	return (positions);
 }
 
-void	suffle(t_point *positions, int size)
+void	shuffle(t_point *positions, int size)
 {
 	int		i;
 	int		random_index;
@@ -113,6 +113,47 @@ void	suffle(t_point *positions, int size)
 	}
 }
 
+// 0 → haut
+// 1 → bas
+// 2 → gauche
+// 3 → droite
+
+void	move_enemy(t_game *g, t_enemy *c)
+{
+	int	new_x;
+	int	new_y;
+
+	new_x = c->x;
+	new_y = c->y;
+	c->direction = rand() % 3;
+	if (c->direction == 0)
+		new_y--;
+	else if (c->direction == 1)
+		new_y++;
+	else if (c->direction == 2)
+		new_x--;
+	else if (c->direction == 3)
+		new_x++;
+	if (g->grid[new_y][new_x] == '0')
+	{
+		c->x = new_x;
+		c->y = new_y;
+		render_map(g);
+	}
+}
+
+void	move_all_enemies(t_game *g)
+{
+	int	i;
+
+	i = 0;
+	while (i < g->enemies_count)
+	{
+		move_enemy(g, &g->enemies[i]);
+		i++;
+	}
+}
+
 void	place_enemies(t_game *g, t_point *positions)
 {
 	int		i;
@@ -121,6 +162,8 @@ void	place_enemies(t_game *g, t_point *positions)
 	while (i < g->enemies_count)
 	{
 		g->grid[positions[i].y][positions[i].x] = 'M';
+		g->enemies[i].x = positions[i].x;
+		g->enemies[i].y = positions[i].y;
 		i++;
 	}
 }
@@ -128,6 +171,7 @@ void	place_enemies(t_game *g, t_point *positions)
 void	create_enemies(t_game *g)
 {
 	t_point	*positions;
+	t_enemy	chicken;
 	int		size;
 
 	srand(time(NULL));
@@ -138,8 +182,9 @@ void	create_enemies(t_game *g)
 	positions = create_array_positions(g, size);
 	if (positions && size > 0)
 	{
-		suffle(positions, size);
+		shuffle(positions, size);
 		place_enemies(g, positions);
 		free(positions);
+		move_all_enemies(g);
 	}
 }

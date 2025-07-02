@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 16:16:03 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/02 12:06:04 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,24 @@
 # include <time.h>
 # include "../libft/libft.h"
 
-typedef enum e_directiom {
+# define TILE_SIZE 64
+# define MOVE_COUNT_ZONE 30
+
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_A 97
+# define KEY_ESC 65307
+# define KEY_Q 113
+
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_RIGHT 65363
+# define KEY_LEFT 65361
+
+# define MAX_ENEMIES 200
+
+typedef enum e_direction {
 	DOWN,
 	UP,
 	RIGHT,
@@ -53,6 +70,13 @@ typedef struct s_point
 	int				y;
 }	t_point;
 
+typedef struct s_enemy
+{
+	int	x;
+	int	y;
+	int	direction;
+}	t_enemy;
+
 typedef struct s_game
 {
 	char		**grid;
@@ -72,22 +96,8 @@ typedef struct s_game
 	t_direction	previous_direction;
 	int			img_index;
 	int			enemies_count;
+	t_enemy		enemies[MAX_ENEMIES];
 }	t_game;
-
-# define TILE_SIZE 64
-# define MOVE_COUNT_ZONE 30
-
-# define KEY_W 119
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_A 97
-# define KEY_ESC 65307
-# define KEY_Q 113
-
-# define KEY_UP 65362
-# define KEY_DOWN 65364
-# define KEY_RIGHT 65363
-# define KEY_LEFT 65361
 
 //init grid
 void	init_struct_game(t_game *g);
@@ -143,7 +153,7 @@ void	init_chicken_sprites(t_game *g);
 int		calculate_size_array_coordinates(t_game *g);
 void	fill_array_positions(t_game *g, t_point *positions);
 t_point	*create_array_positions(t_game *g, int size);
-void	suffle(t_point *positions, int size);
+void	shuffle(t_point *positions, int size);
 void	place_enemies(t_game *g, t_point *positions);
 void	create_enemies(t_game *g);
 
