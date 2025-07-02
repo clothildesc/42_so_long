@@ -6,24 +6,11 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:36:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 16:33:00 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/02 15:54:45 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-void	draw_black_move_zone(t_game *g)
-{
-	int	i;
-
-	i = 0;
-	while (i < g->width * TILE_SIZE)
-	{
-		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.black, \
-								i, g->height * TILE_SIZE);
-		i += TILE_SIZE;
-	}
-}
 
 void	render_tiles_images(t_game *g, int x, int y, char tile)
 {
@@ -40,9 +27,6 @@ void	render_tiles_images(t_game *g, int x, int y, char tile)
 								x * TILE_SIZE, y * TILE_SIZE);
 	else if (tile == 'W')
 		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player_win, \
-								x * TILE_SIZE, y * TILE_SIZE);
-	else if (tile == 'M')
-		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.chicken[0], \
 								x * TILE_SIZE, y * TILE_SIZE);
 }
 
@@ -66,6 +50,23 @@ void	render_player_sprites(t_game *g)
 						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
 }
 
+void	render_enemies(t_game *g)
+{
+	int	i;
+	int	frame;
+
+	frame = (g->tick / 10000) % 5;
+	i = 0;
+	while (i < g->enemies_count)
+	{
+		mlx_put_image_to_window(g->mlx, g->mlx_win, \
+								g->img.chicken[frame], \
+								g->enemies[i].x * TILE_SIZE, \
+								g->enemies[i].y * TILE_SIZE);
+		i++;
+	}
+}
+
 void	render_map(t_game *g)
 {
 	char	tile;
@@ -85,30 +86,9 @@ void	render_map(t_game *g)
 		y++;
 	}
 	if (!g->game_won)
+	{
 		render_player_sprites(g);
+		render_enemies(g);
+	}
 	draw_black_move_zone(g);
-}
-
-void	display_move_count(t_game *g)
-{
-	char	*str;
-
-	str = ft_itoa(g->move_count);
-	if (!g->game_won)
-	{
-		mlx_string_put(g->mlx, g->mlx_win, 15, (g->height * TILE_SIZE) + 20, \
-		0xFFFFFF, "Total moves: ");
-		mlx_string_put(g->mlx, g->mlx_win, 100, (g->height * TILE_SIZE) + 20, \
-		0xFFFFFF, str);
-		ft_printf("Total moves: %d\n", g->move_count);
-	}
-	else
-	{
-		mlx_string_put(g->mlx, g->mlx_win, 15, (g->height * TILE_SIZE) + 20, \
-		0xFFFFFF, "CONGRATS! Total move : ");
-		mlx_string_put(g->mlx, g->mlx_win, 160, (g->height * TILE_SIZE) + 20, \
-		0xFFFFFF, str);
-		ft_printf("CONGRATS! You won with: %d\n", g->move_count);
-	}
-	free(str);
 }

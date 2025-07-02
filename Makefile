@@ -6,7 +6,7 @@
 #    By: cscache <cscache@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/24 09:47:02 by cscache           #+#    #+#              #
-#    Updated: 2025/07/01 16:43:35 by cscache          ###   ########.fr        #
+#    Updated: 2025/07/02 15:55:19 by cscache          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,9 @@ SRCS = $(SRCS_DIR)/main.c \
 		$(SRCS_DIR)/check_constraints_1.c \
 		$(SRCS_DIR)/check_constraints_2.c \
 		$(SRCS_DIR)/init_grid.c \
-		$(SRCS_DIR)/init_win_and_img.c \
+		$(SRCS_DIR)/init_win.c \
+		$(SRCS_DIR)/init_imgs.c \
+		$(SRCS_DIR)/display_move_count.c \
 		$(SRCS_DIR)/display_game.c \
 		$(SRCS_DIR)/manage_game.c \
 		$(SRCS_DIR)/run_game.c \

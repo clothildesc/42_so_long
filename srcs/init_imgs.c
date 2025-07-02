@@ -1,37 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_win_and_img.c                                 :+:      :+:    :+:   */
+/*   init_imgs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 11:55:36 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 16:34:35 by cscache          ###   ########.fr       */
+/*   Created: 2025/07/02 15:49:52 by cscache           #+#    #+#             */
+/*   Updated: 2025/07/02 15:49:55 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-void	init_window(t_game *g)
-{
-	int	window_height;
-	int	window_width;
-
-	window_height = g->height * TILE_SIZE + MOVE_COUNT_ZONE;
-	window_width = g->width * TILE_SIZE;
-	g->mlx = mlx_init();
-	if (!g->mlx)
-	{
-		display_error_message("Failed to initialize MLX");
-		clean_exit(g, EXIT_FAILURE);
-	}
-	g->mlx_win = mlx_new_window(g->mlx, window_width, window_height, "so long");
-	if (!g->mlx_win)
-	{
-		display_error_message("Failed to open window");
-		clean_exit(g, EXIT_FAILURE);
-	}
-}
 
 void	init_player_up_and_down(t_game *g)
 {
@@ -104,6 +83,30 @@ void	init_other_images(t_game *g)
 										&img_width, &img_height);
 	if (!g->img.wall || !g->img.floor || !g->img.collectible \
 		|| !g->img.exit || !g->img.player_win || !g->img.black)
+	{
+		display_error_message("Failed to load image");
+		clean_exit(g, EXIT_FAILURE);
+	}
+}
+
+void	init_chicken_sprites(t_game *g)
+{
+	int		img_width;
+	int		img_height;
+
+	g->img.chicken[0] = mlx_xpm_file_to_image(g->mlx, \
+		"assets/chicken-1.xpm", &img_width, &img_height);
+	g->img.chicken[1] = mlx_xpm_file_to_image(g->mlx, \
+		"assets/chicken-2.xpm", &img_width, &img_height);
+	g->img.chicken[2] = mlx_xpm_file_to_image(g->mlx, \
+		"assets/chicken-3.xpm", &img_width, &img_height);
+	g->img.chicken[3] = mlx_xpm_file_to_image(g->mlx, \
+		"assets/chicken-4.xpm", &img_width, &img_height);
+	g->img.chicken[4] = mlx_xpm_file_to_image(g->mlx, \
+		"assets/chicken-5.xpm", &img_width, &img_height);
+	if (!g->img.chicken[0] || !g->img.chicken[1] \
+		|| !g->img.chicken[2] || !g->img.chicken[3] \
+		|| !g->img.chicken[4])
 	{
 		display_error_message("Failed to load image");
 		clean_exit(g, EXIT_FAILURE);

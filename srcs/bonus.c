@@ -6,35 +6,11 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:41:43 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/02 12:18:39 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/02 16:17:20 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-void	init_chicken_sprites(t_game *g)
-{
-	int		img_width;
-	int		img_height;
-
-	g->img.chicken[0] = mlx_xpm_file_to_image(g->mlx, \
-		"assets/chicken-1.xpm", &img_width, &img_height);
-	g->img.chicken[1] = mlx_xpm_file_to_image(g->mlx, \
-		"assets/chicken-2.xpm", &img_width, &img_height);
-	g->img.chicken[2] = mlx_xpm_file_to_image(g->mlx, \
-		"assets/chicken-3.xpm", &img_width, &img_height);
-	g->img.chicken[3] = mlx_xpm_file_to_image(g->mlx, \
-		"assets/chicken-4.xpm", &img_width, &img_height);
-	g->img.chicken[4] = mlx_xpm_file_to_image(g->mlx, \
-		"assets/chicken-5.xpm", &img_width, &img_height);
-	if (!g->img.chicken[0] || !g->img.chicken[1] \
-		|| !g->img.chicken[2] || !g->img.chicken[3] \
-		|| !g->img.chicken[4])
-	{
-		display_error_message("Failed to load image");
-		clean_exit(g, EXIT_FAILURE);
-	}
-}
 
 int	calculate_size_array_coordinates(t_game *g)
 {
@@ -96,7 +72,7 @@ t_point	*create_array_positions(t_game *g, int size)
 	return (positions);
 }
 
-void	shuffle(t_point *positions, int size)
+void	shuffle_positions(t_point *positions, int size)
 {
 	int		i;
 	int		random_index;
@@ -113,65 +89,154 @@ void	shuffle(t_point *positions, int size)
 	}
 }
 
-// 0 → haut
-// 1 → bas
-// 2 → gauche
-// 3 → droite
-
-void	move_enemy(t_game *g, t_enemy *c)
+void	shuffle_directions(int *directions, int size)
 {
-	int	new_x;
-	int	new_y;
+	int		i;
+	int		random_index;
+	int		temp;
 
-	new_x = c->x;
-	new_y = c->y;
-	c->direction = rand() % 3;
-	if (c->direction == 0)
-		new_y--;
-	else if (c->direction == 1)
-		new_y++;
-	else if (c->direction == 2)
-		new_x--;
-	else if (c->direction == 3)
-		new_x++;
-	if (g->grid[new_y][new_x] == '0')
+	i = size - 1;
+	while (i >= 0)
 	{
-		c->x = new_x;
-		c->y = new_y;
-		render_map(g);
+		random_index = rand () % (i + 1);
+		temp = directions[i];
+		directions[i] = directions[random_index];
+		directions[random_index] = temp;
+		i--;
 	}
 }
 
-void	move_all_enemies(t_game *g)
+void	update_position(int direction, int *new_x, int *new_y)
+{
+	if (direction == 0)
+		(*new_y)--;
+	else if (direction == 1)
+		(*new_y)++;
+	else if (direction == 2)
+		(*new_x)--;
+	else if (direction == 3)
+		(*new_x)++;
+}
+
+int	is_tile_occupied(t_game *g, t_enemy *c, int new_x, int new_y)
+{
+	int	i;
+
+	i = 0;
+	if (g->grid[new_y][new_x] == '0')
+	{
+		while (i < g->enemies_count)
+		{
+			if (&g->enemies[i] != c && (g->enemies[i].x == new_x \
+				&& g->enemies[i].y == new_y))
+				return (1);
+			i++;
+		}
+		return (0);
+	}
+	return (1);
+}
+
+void	find_valid_direction(int *directions, t_game *g, t_enemy *c, int new_x, int new_y)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		new_x = c->x;
+		new_y = c->y;
+		update_position(directions[i], &new_x, &new_y);
+		if (!is_tile_occupied(g, c, new_x, new_y))
+		{
+			c->y = new_y;
+			c->x = new_x;
+			c->direction = directions[i];
+			break ;
+		}
+		i++;
+	}
+}
+
+void	check_if_game_over(t_game *g)
 {
 	int	i;
 
 	i = 0;
 	while (i < g->enemies_count)
 	{
-		move_enemy(g, &g->enemies[i]);
+		if (g->enemies[i].y == g->player_y && g->enemies[i].x == g->player_x)
+		{
+			g->game_lose = 1;
+			close_window(g);
+		}
 		i++;
 	}
 }
 
-void	place_enemies(t_game *g, t_point *positions)
+void	move_enemy(t_game *g, t_enemy *c)
 {
-	int		i;
+	int	directions[4];
+	int	new_x;
+	int	new_y;
+	int	i;
+
+	new_x = c->x;
+	new_y = c->y;
+	i = 0;
+	while (i < 4)
+	{
+		directions[i] = i;
+		i++;
+	}
+	shuffle_directions(directions, 4);
+	find_valid_direction(directions, g, c, new_x, new_y);
+}
+
+void	move_all_enemies(t_game *g, int step)
+{
+	int	i;
 
 	i = 0;
 	while (i < g->enemies_count)
 	{
-		g->grid[positions[i].y][positions[i].x] = 'M';
+		if (i % 2 == step)
+			move_enemy(g, &g->enemies[i]);
+		i++;
+	}
+}
+
+void	place_enemies(t_game *g, t_point *positions, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < g->enemies_count && i < size)
+	{
 		g->enemies[i].x = positions[i].x;
 		g->enemies[i].y = positions[i].y;
 		i++;
 	}
 }
 
+int	handle_tick(t_game *g)
+{
+	static int	step;
+
+	g->tick++;
+	check_if_game_over(g);
+	if (g->tick % 60000 == 0)
+	{
+		move_all_enemies(g, step);
+		step = 1 - step;
+		render_map(g);
+	}
+	return (0);
+}
+
 void	create_enemies(t_game *g)
 {
 	t_point	*positions;
-	t_enemy	chicken;
 	int		size;
 
 	srand(time(NULL));
@@ -182,9 +247,9 @@ void	create_enemies(t_game *g)
 	positions = create_array_positions(g, size);
 	if (positions && size > 0)
 	{
-		shuffle(positions, size);
-		place_enemies(g, positions);
+		shuffle_positions(positions, size);
+		place_enemies(g, positions, size);
 		free(positions);
-		move_all_enemies(g);
 	}
 }
+

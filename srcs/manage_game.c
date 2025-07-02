@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:39:35 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 17:17:31 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/02 16:18:16 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	handle_key_input(int keycode, void *param)
 			handle_player_movement(g, 1, 0);
 		else if (g->direction == LEFT)
 			handle_player_movement(g, -1, 0);
+		check_if_game_over(g);
 	}
 	return (0);
 }

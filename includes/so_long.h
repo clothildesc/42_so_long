@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/02 12:06:04 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/02 16:08:06 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_game
 	int			exit_count;
 	int			move_count;
 	int			game_won;
+	int			game_lose;
 	int			player_x;
 	int			player_y;
 	void		*mlx;
@@ -97,6 +98,7 @@ typedef struct s_game
 	int			img_index;
 	int			enemies_count;
 	t_enemy		enemies[MAX_ENEMIES];
+	int			tick;
 }	t_game;
 
 //init grid
@@ -120,25 +122,36 @@ int		check_accessility(t_game *g);
 int		validate_map(t_game *g);
 int		load_map(t_game *g, char *file);
 
-//init window and images
+//init window
 void	init_window(t_game *g);
+
+//init images
 void	init_player_up_and_down(t_game *g);
 void	init_player_right_and_left(t_game *g);
 void	init_other_images(t_game *g);
+void	init_chicken_sprites(t_game *g);
 void	init_images(t_game *g);
 
-//mxl
+//display move_count
 void	draw_black_move_zone(t_game *g);
+void	display_move_count(t_game *g);
+
+//display game
 void	render_tiles_images(t_game *g, int x, int y, char tile);
 void	render_player_sprites(t_game *g);
+void	render_enemies(t_game *g);
 void	render_map(t_game *g);
+
+//manage game
 void	update_game(t_game *g, int new_x, int new_y);
-void	display_move_count(t_game *g);
 int		handle_player_movement(t_game *g, int x, int y);
 void	set_player_direction(t_game *g, int keycode);
 int		handle_key_input(int keycode, void *param);
 int		close_window(void *param);
+
+// run game
 void	initialize_and_start_game(t_game *g);
+void	display_error_message(char *message);
 
 //free
 void	free_grid_cpy(char **grid_cpy);
@@ -146,15 +159,17 @@ void	free_grid(t_game *g);
 void	clean_exit(t_game *g, int exit_code);
 void	destroy_player_sprites(t_game *g);
 void	destroy_other_images(t_game *g);
-void	display_error_message(char *message);
 
 //bonus
-void	init_chicken_sprites(t_game *g);
 int		calculate_size_array_coordinates(t_game *g);
 void	fill_array_positions(t_game *g, t_point *positions);
 t_point	*create_array_positions(t_game *g, int size);
-void	shuffle(t_point *positions, int size);
-void	place_enemies(t_game *g, t_point *positions);
+void	shuffle_positions(t_point *positions, int size);
+void	move_enemy(t_game *g, t_enemy *c);
+void	move_all_enemies(t_game *g, int step);
+void	place_enemies(t_game *g, t_point *positions, int size);
 void	create_enemies(t_game *g);
+int		handle_tick(t_game *g);
+void	check_if_game_over(t_game *g);
 
 #endif
