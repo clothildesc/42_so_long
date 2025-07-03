@@ -6,7 +6,7 @@
 #    By: cscache <cscache@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/24 09:47:02 by cscache           #+#    #+#              #
-#    Updated: 2025/07/02 15:55:19 by cscache          ###   ########.fr        #
+#    Updated: 2025/07/03 15:48:04 by cscache          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,10 @@ SRCS = $(SRCS_DIR)/main.c \
 		$(SRCS_DIR)/manage_game.c \
 		$(SRCS_DIR)/run_game.c \
 		$(SRCS_DIR)/free.c \
-		$(SRCS_DIR)/bonus.c
+		$(SRCS_DIR)/b_create_enemy_utils.c \
+		$(SRCS_DIR)/b_create_enemy.c \
+		$(SRCS_DIR)/b_move_enemy_utils.c \
+		$(SRCS_DIR)/b_move_enemy.c
 
 OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 

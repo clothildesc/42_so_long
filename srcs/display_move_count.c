@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 15:54:29 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/02 16:04:01 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/03 16:37:38 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,22 @@ void	draw_black_move_zone(t_game *g)
 	}
 }
 
+void	display_game_over(t_game *g, char *str)
+{
+	mlx_string_put(g->mlx, g->mlx_win, 15, (g->height * TILE_SIZE) + 20, \
+	0xFFFFFF, "OH NO! GAME OVER... Total move : ");
+	mlx_string_put(g->mlx, g->mlx_win, 100, (g->height * TILE_SIZE) + 20, \
+	0xFFFFFF, str);
+	ft_printf("OH NO! GAME OVER... Total move : %d\n", g->move_count);
+}
+
 void	display_move_count(t_game *g)
 {
 	char	*str;
 
 	str = ft_itoa(g->move_count);
 	if (g->game_lose)
-	{
-		mlx_string_put(g->mlx, g->mlx_win, 15, (g->height * TILE_SIZE) + 20, \
-		0xFFFFFF, "OH NO! GAME OVER... Total move : ");
-		mlx_string_put(g->mlx, g->mlx_win, 100, (g->height * TILE_SIZE) + 20, \
-		0xFFFFFF, str);
-		ft_printf("OH NO! GAME OVER... Total move : %d\n", g->move_count);
-	}
+		display_game_over(g, str);
 	else if (!g->game_won)
 	{
 		mlx_string_put(g->mlx, g->mlx_win, 15, (g->height * TILE_SIZE) + 20, \
@@ -52,7 +55,7 @@ void	display_move_count(t_game *g)
 		0xFFFFFF, "CONGRATS! Total move : ");
 		mlx_string_put(g->mlx, g->mlx_win, 160, (g->height * TILE_SIZE) + 20, \
 		0xFFFFFF, str);
-		ft_printf("CONGRATS! You won with: %d\n", g->move_count);
+		ft_printf("CONGRATS! You won with: %d\n moves", g->move_count);
 	}
 	free(str);
 }

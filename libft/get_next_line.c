@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 10:05:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/10 17:59:18 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/03 15:13:43 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,10 @@ static void	clean_list(t_list **list)
 		return ;
 	last_node = *list;
 	while (last_node->next)
-	last_node = last_node->next;
+		last_node = last_node->next;
 	while (((char *)last_node->content)[i] && \
 	((char *)last_node->content)[i] != '\n')
-	i++;
+		i++;
 	if (((char *)last_node->content)[i] == '\n' \
 	&& ((char *)last_node->content)[i + 1])
 	{

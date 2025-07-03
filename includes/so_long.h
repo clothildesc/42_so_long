@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/02 16:08:06 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/03 16:17:52 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void	init_images(t_game *g);
 
 //display move_count
 void	draw_black_move_zone(t_game *g);
+void	display_game_over(t_game *g, char *str);
 void	display_move_count(t_game *g);
 
 //display game
@@ -165,11 +166,17 @@ int		calculate_size_array_coordinates(t_game *g);
 void	fill_array_positions(t_game *g, t_point *positions);
 t_point	*create_array_positions(t_game *g, int size);
 void	shuffle_positions(t_point *positions, int size);
+void	place_enemies(t_game *g, t_point *positions, int size);
+int		valid_conditions_to_create(t_game *g, t_point *positions, int size);
+void	create_enemies(t_game *g);
+void	shuffle_directions(int *directions, int size);
+void	update_position(int direction, t_point *pos);
+int		is_tile_occupied(t_game *g, t_enemy *c, t_point *pos);
+void	find_valid_direction(int *directions, t_game *g, t_enemy *c, \
+	t_point *pos);
+void	check_if_game_over(t_game *g);
 void	move_enemy(t_game *g, t_enemy *c);
 void	move_all_enemies(t_game *g, int step);
-void	place_enemies(t_game *g, t_point *positions, int size);
-void	create_enemies(t_game *g);
 int		handle_tick(t_game *g);
-void	check_if_game_over(t_game *g);
 
 #endif
