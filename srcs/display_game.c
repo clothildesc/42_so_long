@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:36:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/07 12:29:09 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 13:16:48 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	render_frame(t_game *g, void **img)
 	int	i;
 	int	frame;
 
-	frame = (g->tick / 500) % 3;
+	frame = (g->tick / 200) % 3;
 	i = 0;
 	while (i < 3)
 	{
