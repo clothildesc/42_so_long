@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:41:43 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/07 10:01:00 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 12:11:57 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,21 @@ void	move_all_enemies(t_game *g, int step)
 
 int	handle_tick(t_game *g)
 {
-	static int	step;
+	static int		step;
+	static clock_t	last_time = 0;
+	clock_t			current_time;
 
+	current_time = clock();
+	if (last_time == 0)
+		last_time = current_time;
 	g->tick++;
 	check_if_game_over(g);
-	if (g->tick % 60000 == 0)
+	if ((current_time - last_time) >= (CLOCKS_PER_SEC * 0.4))
 	{
 		move_all_enemies(g, step);
 		step = 1 - step;
 		render_map(g);
+		last_time = current_time;
 	}
 	return (0);
 }
