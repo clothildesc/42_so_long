@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/07 10:35:49 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 14:45:43 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include <mlx.h>
 # include <time.h>
 # include "../libft/libft.h"
+
+# ifndef BONUS
+#  define BONUS 0
+# endif
 
 # define TILE_SIZE 64
 # define MOVE_COUNT_ZONE 30
@@ -95,7 +99,6 @@ typedef struct s_game
 	void		*mlx_win;
 	t_img_game	img;
 	t_direction	direction;
-	t_direction	previous_direction;
 	int			img_index;
 	int			enemies_count;
 	t_enemy		enemies[MAX_ENEMIES];

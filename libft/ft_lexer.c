@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 13:48:19 by cscache           #+#    #+#             */
-/*   Updated: 2025/06/20 16:54:43 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 13:37:31 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,3 @@ char	**ft_lexer(const char *input)
 	finish_token(&(lexer.tmp_token), &(lexer.lst_tokens));
 	return (lst_to_array(lexer.lst_tokens));
 }
-
-/* #include <stdio.h>
-
-int	main(int ac, char *av[])
-{
-	char	**array;
-	int		i;
-
-	i = 0;
-	if (ac == 2)
-	{
-		array = ft_lexer(av[1]);
-		if (!array)
-			return (1);
-		while (array[i])
-		{
-			printf("%s\n", array[i]);
-			free(array[i]);
-			i++;
-		}
-		free(array);
-	}
-	return (0);
-} */

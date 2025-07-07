@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:36:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/07 13:16:48 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 14:34:29 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,6 @@ void	render_tiles_images(t_game *g, int x, int y, char tile)
 		mlx_put_image_to_window(g->mlx, g->mlx_win, g->img.player_win, \
 								x * TILE_SIZE, y * TILE_SIZE);
 }
-
-/* void	render_player_sprites(t_game *g)
-{
-	if (g->direction == DOWN)
-		mlx_put_image_to_window(g->mlx, g->mlx_win, \
-						g->img.player.walk_down[g->img_index], \
-						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
-	else if (g->direction == UP)
-		mlx_put_image_to_window(g->mlx, g->mlx_win, \
-						g->img.player.walk_up[g->img_index], \
-						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
-	else if (g->direction == RIGHT)
-		mlx_put_image_to_window(g->mlx, g->mlx_win, \
-						g->img.player.walk_right[g->img_index], \
-						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
-	else if (g->direction == LEFT)
-		mlx_put_image_to_window(g->mlx, g->mlx_win, \
-						g->img.player.walk_left[g->img_index], \
-						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
-	else
-		mlx_put_image_to_window(g->mlx, g->mlx_win, \
-						g->img.player.walk_down[0], \
-						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
-} */
 
 void	render_frame(t_game *g, void **img)
 {
@@ -123,7 +99,8 @@ void	render_map(t_game *g)
 	if (!g->game_won)
 	{
 		render_player_sprites(g);
-		render_enemies(g);
+		if (BONUS)
+			render_enemies(g);
 	}
 	draw_black_move_zone(g);
 	display_move_count(g);

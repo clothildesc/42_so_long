@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 15:54:29 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/07 10:02:48 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 14:35:30 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	display_move_count(t_game *g)
 	char	*str;
 
 	str = ft_itoa(g->move_count);
-	if (g->game_lose)
+	if (BONUS && g->game_lose)
 		display_game_over(g, str);
 	else if (!g->game_won)
 	{
@@ -62,7 +62,7 @@ void	print_move_count(t_game *g)
 	char	*str;
 
 	str = ft_itoa(g->move_count);
-	if (g->game_lose)
+	if (BONUS && g->game_lose)
 		ft_printf("OH NO! GAME OVER... Total move : %d\n", g->move_count);
 	else if (!g->game_won)
 		ft_printf("Total moves: %d\n", g->move_count);

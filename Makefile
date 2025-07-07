@@ -6,13 +6,14 @@
 #    By: cscache <cscache@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/24 09:47:02 by cscache           #+#    #+#              #
-#    Updated: 2025/07/03 15:48:04 by cscache          ###   ########.fr        #
+#    Updated: 2025/07/07 14:40:20 by cscache          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm -lz
+BONUS_FLAGS = -DBONUS=1
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -64,6 +65,9 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADER) | $(OBJS_DIR)
 
 $(NAME): $(LIBFT) $(OBJS) $(MLX)
 	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft $(MLX_FLAGS) -o $(NAME)
+
+bonus: CFLAGS += $(BONUS_FLAGS)
+bonus: clean all
 
 clean:
 	make -C $(LIBFT_DIR) clean
