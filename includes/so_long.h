@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 09:49:15 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/03 16:17:52 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 10:35:49 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ typedef enum e_direction {
 	UP,
 	RIGHT,
 	LEFT,
-	QUIT
+	QUIT,
+	NONE
 }	t_direction;
 
 typedef struct s_player_sprites {
@@ -136,6 +137,7 @@ void	init_images(t_game *g);
 void	draw_black_move_zone(t_game *g);
 void	display_game_over(t_game *g, char *str);
 void	display_move_count(t_game *g);
+void	print_move_count(t_game *g);
 
 //display game
 void	render_tiles_images(t_game *g, int x, int y, char tile);

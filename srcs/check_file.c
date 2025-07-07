@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:32:56 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/01 11:33:17 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 11:37:20 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,19 @@
 
 int	check_extension(const char *file)
 {
-	int	len;
+	int		len;
+	char	*str;
 
 	if (!file)
-		return (display_error_message("Invalid file extension"), 0);
-	len = ft_strlen(file);
+		return (display_error_message("Invalid file"), 0);
+	if (ft_strchr(file, '/'))
+		str = ft_strchr(file, '/') + 1;
+	else
+		str = (char *)file;
+	len = ft_strlen(str);
 	if (len < 5)
-		return (display_error_message("Invalid file extension"), 0);
-	if (ft_strncmp(file + len - 4, ".ber", 4) != 0)
+		return (display_error_message("Invalid file"), 0);
+	if (ft_strncmp(str + len - 4, ".ber", 4) != 0)
 	{
 		display_error_message("Invalid file extension");
 		return (0);

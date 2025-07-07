@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:39:35 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/03 16:03:36 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 10:33:41 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	update_game(t_game *g, int new_x, int new_y)
 	if (g->game_won == 1)
 		g->grid[new_y][new_x] = 'W';
 	render_map(g);
-	display_move_count(g);
+	print_move_count(g);
 }
 
 int	handle_player_movement(t_game *g, int x, int y)

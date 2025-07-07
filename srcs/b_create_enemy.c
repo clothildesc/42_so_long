@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:20:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/03 16:21:26 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 11:45:18 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	create_enemies(t_game *g)
 		shuffle_positions(positions, size);
 		place_enemies(g, positions, size);
 	}
+	else
+		g->enemies_count = 0;
 	if (positions)
 		free(positions);
 }

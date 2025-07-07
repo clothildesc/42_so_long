@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 16:51:11 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/03 14:31:45 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 10:36:16 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_struct_game(t_game *g)
 	if (!g)
 		return ;
 	ft_bzero(g, sizeof(t_game));
+	g->direction = NONE;
 }
 
 void	init_height(const char *file, t_game *g)

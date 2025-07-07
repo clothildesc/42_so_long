@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:36:13 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/02 15:54:45 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 10:35:26 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ void	render_player_sprites(t_game *g)
 	else if (g->direction == LEFT)
 		mlx_put_image_to_window(g->mlx, g->mlx_win, \
 						g->img.player.walk_left[g->img_index], \
+						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
+	else
+		mlx_put_image_to_window(g->mlx, g->mlx_win, \
+						g->img.player.walk_down[0], \
 						g->player_x * TILE_SIZE, g->player_y * TILE_SIZE);
 }
 
@@ -91,4 +95,5 @@ void	render_map(t_game *g)
 		render_enemies(g);
 	}
 	draw_black_move_zone(g);
+	display_move_count(g);
 }

@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:41:43 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/03 16:35:50 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 10:01:00 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	check_if_game_over(t_game *g)
 		{
 			g->game_lose = 1;
 			display_move_count(g);
+			print_move_count(g);
 			close_window(g);
 		}
 		i++;
