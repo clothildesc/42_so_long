@@ -6,7 +6,7 @@
 /*   By: cscache <cscache@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:39:35 by cscache           #+#    #+#             */
-/*   Updated: 2025/07/07 10:33:41 by cscache          ###   ########.fr       */
+/*   Updated: 2025/07/07 12:17:09 by cscache          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	update_game(t_game *g, int new_x, int new_y)
 	(g->move_count)++;
 	g->player_x = new_x;
 	g->player_y = new_y;
-	if (g->previous_direction == g->direction)
+	/* if (g->previous_direction == g->direction)
 		g->img_index = (g->img_index + 1) % 3;
 	else
-		g->img_index = 0;
+		g->img_index = 0; */
 	if (g->game_won == 1)
 		g->grid[new_y][new_x] = 'W';
 	render_map(g);
@@ -58,7 +58,7 @@ int	handle_player_movement(t_game *g, int x, int y)
 
 void	set_player_direction(t_game *g, int keycode)
 {
-	g->previous_direction = g->direction;
+	/* g->previous_direction = g->direction; */
 	if (keycode == KEY_W || keycode == KEY_UP)
 		g->direction = UP;
 	else if (keycode == KEY_S || keycode == KEY_DOWN)
