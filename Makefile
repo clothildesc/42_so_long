@@ -6,7 +6,7 @@
 #    By: cscache <cscache@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/24 09:47:02 by cscache           #+#    #+#              #
-#    Updated: 2025/07/07 14:40:20 by cscache          ###   ########.fr        #
+#    Updated: 2025/07/08 10:06:31 by cscache          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ BONUS_FLAGS = -DBONUS=1
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-MLX_DIR = mlx-linux
+MLX_DIR = minilibx-linux
 MLX = $(MLX_DIR)/libmlx.a
 
 INCLUDES = -I includes -I $(LIBFT_DIR) -I $(MLX_DIR)
